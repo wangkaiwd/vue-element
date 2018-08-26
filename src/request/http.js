@@ -22,7 +22,6 @@ const instance = axios.create({
   headers: {
     'app_device': 1,
     'push_userid': '0',
-    // 'Content-Type': 'application/x-www-form-urlencoded'
   }
 })
 instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'

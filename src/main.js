@@ -11,7 +11,7 @@ import '@/assets/styles/reset'
 import '@/utils/rem.js'
 
 import '@/request/http'
-import Api from '@/request/api'
+import Api from '@/api'
 
 Vue.prototype.$Api = Api
 
