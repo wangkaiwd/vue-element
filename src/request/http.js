@@ -17,7 +17,7 @@ const getToken = () => {
 }
 
 const instance = axios.create({
-  baseURL: 'https://oss.inglemirepharm.com/api_vip/',
+  baseURL: 'https://www.easy-mock.com/mock/5b838e2a445175634e4dbe20/element',
   timeout: 20000,
   headers: {
     'app_device': 1,
@@ -29,7 +29,7 @@ instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlenco
 
 // 请求拦截
 instance.interceptors.request.use(function (config) {
-  console.log('请求成功', config)
+  // console.log('请求成功', config)
   const {method, data} = config
   if (method === 'post') {
     config.data = qs.stringify(data)
@@ -42,14 +42,14 @@ instance.interceptors.request.use(function (config) {
   })
   return config
 }, function (error) {
-  console.log('请求失败', error)
+  // console.log('请求失败', error)
   return Promise.reject(error)
 })
 //
 // 响应拦截
 instance.interceptors.response.use(function (response) {
   store.commit('changeWebStatus', false)
-  console.log('响应成功', response)
+  // console.log('响应成功', response)
   Toast.clear()
   // Do something with response data
   if (response.status === 200) {
@@ -79,7 +79,7 @@ instance.interceptors.response.use(function (response) {
  */
 export const ajaxFunc = (url, method = 'post', needTip = true) => {
   const errorFunc = (err) => {
-    console.log('请求成功-失败', err)
+    // console.log('请求成功-失败', err)
     if (err.msg) {
       needTip && Toast(err.msg)
     }

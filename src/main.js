@@ -11,9 +11,9 @@ import '@/assets/styles/reset'
 import '@/utils/rem.js'
 
 import '@/request/http'
-import Api from '@/request/api'
+import Api from '@/api'
 
-Vue.prototype.$Api = Api
+Vue.prototype.$api = Api
 
 Vue.config.productionTip = false
 
