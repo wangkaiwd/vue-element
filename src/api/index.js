@@ -1,5 +1,5 @@
-import lianlian from './lianlian'
+import element from './element'
 
 export default {
-  lianlian,
+  element,
 }
