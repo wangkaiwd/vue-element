@@ -53,12 +53,13 @@ instance.interceptors.response.use(function (response) {
   Toast.clear()
   // Do something with response data
   if (response.status === 200) {
-    if (response.data.code === 0) {
-      return response.data
-    }
-    if (response.data.code !== 0) {
-      return Promise.reject(response.data)
-    }
+    // if (response.data.code === 0) {
+    //   return response.data
+    // }
+    // if (response.data.code !== 0) {
+    //   return Promise.reject(response.data)
+    // }
+    return response.data
   } else {
     return Promise.reject(response)
   }
@@ -96,9 +97,7 @@ export const ajaxFunc = (url, method = 'post', needTip = true) => {
     instance[method](url, value)
       .then(
         res => success(res),
-        err => {
-          error(err)
-        }
+        err => error(err)
       )
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <el-header></el-header>
+    <el-header :sellerData="sellerData"></el-header>
     <el-tabs></el-tabs>
     <router-view></router-view>
   </div>
@@ -16,13 +16,18 @@
       'el-header': Header,
       'el-tabs': Tabs
     },
+    data () {
+      return {
+        sellerData: {}
+      }
+    },
     mounted () {
-      this.getGoodsData()
+      this.getSellerData()
     },
     methods: {
-      getGoodsData () {
-        this.$api.element.fetchGoods({}, res => {
-
+      getSellerData () {
+        this.$api.element.fetchSeller({}, res => {
+          this.sellerData = res.seller
         })
       }
     }

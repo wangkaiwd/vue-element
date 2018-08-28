@@ -12,6 +12,9 @@ import '@/utils/rem.js'
 
 import '@/request/http'
 import Api from '@/api'
+import BaseIcon from '@/components/icon/icon'
+
+Vue.component('base-icon', BaseIcon)
 
 Vue.prototype.$api = Api
 
