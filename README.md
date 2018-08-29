@@ -40,8 +40,8 @@
 但是此时当`chrome`调整到`iphone6/7/8`的时候，`html`的`font-size`是`5px`，即`1rem = 5px`,
 可以实际确是:`1rem = 12px`。因为`chrome`浏览器最小字体只支持`12px`,所以将75改为7.5,设计图/10计算
 出对应的`rem`。
-5. 设置完`rem`之后，还要在`body`中初始化页面的字体大小，否则页面中的字体都会是50px即1rem的大小
-   具体做法：在`reset.less`中，设置：`body{ font-size: 14px; }
+5. 设置完`rem`之后，还要在`body`中初始化页面的字体大小，否则页面中的字体都会是50px即1rem的大小  
+   具体做法：在`reset.less`中，设置：`body{ font-size: 14px; }`
 
 加注释的代码：
 ```js
