@@ -1,7 +1,7 @@
 <template>
   <div class="index">
+    <dis-connected v-if="network"></dis-connected>
     <router-view/>
-    <dis-connected></dis-connected>
   </div>
 </template>
 
