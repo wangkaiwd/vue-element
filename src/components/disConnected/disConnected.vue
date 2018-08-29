@@ -17,5 +17,6 @@
     width: 100%;
     height: 100vh;
     background-color: pink;
+    z-index: 9999;
   }
 </style>

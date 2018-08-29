@@ -91,7 +91,13 @@ export const ajaxFunc = (url, method = 'post', needTip = true) => {
    * @param error {Function} 失败回调
    */
   return (params, success, error = errorFunc) => {
-    let value
+    let value, temp
+    if (Object.prototype.toString.call(params) === '[object Function]') {
+      temp = success
+      success = params
+      error = temp
+      params = {}
+    }
     method === 'post' ? value = params : value = {params}
     instance[method](url, value)
       .then(

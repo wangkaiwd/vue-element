@@ -26,7 +26,7 @@
     },
     methods: {
       getSellerData () {
-        this.$api.element.fetchSeller({}, res => {
+        this.$api.element.fetchSeller(res => {
           this.sellerData = res.seller
         })
       }
@@ -36,6 +36,5 @@
 
 <style lang="less" scoped>
   .home {
-
   }
 </style>
