@@ -5,7 +5,7 @@
         <img class="avatar" :src="sellerData.avatar" alt="">
       </div>
       <div class="content-right">
-        <h3 class="title">粥品香坊（大运村）</h3>
+        <h3 class="title"><img class="brand" :src="BrandPic" alt="">粥品香坊（大运村）</h3>
         <p class="deliver">蜂鸟专送/88分钟送达</p>
         <p class="full-cut">在线支付满28减5，满50减10</p>
       </div>
@@ -20,6 +20,7 @@
 
 <script>
   import BulletinPic from '@/assets/img/bulletin@2x.png'
+  import BrandPic from '@/assets/img/brand@2x.png'
 
   export default {
     name: 'elHeader',
@@ -31,7 +32,8 @@
     },
     data () {
       return {
-        BulletinPic
+        BulletinPic,
+        BrandPic
       }
     }
   }
@@ -64,11 +66,11 @@
     }
     .deliver {
       font-size: 14px;
-      margin-top: .06rem;
+      margin-top: .16rem;
     }
     .full-cut {
       font-size: 12px;
-      margin-top: .08rem;
+      margin-top: .2rem;
     }
     .header-bottom {
       padding: 0 .24rem;
@@ -101,6 +103,9 @@
     .bulletin-icon {
       margin-left: auto;
       font-size: 16px;
+    }
+    .brand {
+      height: .32rem;
     }
   }
 </style>
