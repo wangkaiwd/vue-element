@@ -1,13 +1,23 @@
 <template>
   <div class="index">
-    App
     <router-view/>
+    <dis-connected></dis-connected>
   </div>
 </template>
 
 <script>
+  import DisConnected from '@/components/disConnected'
+
   export default {
-    name: 'App'
+    name: 'App',
+    computed: {
+      network () {
+        return this.$store.state.offline
+      }
+    },
+    components: {
+      DisConnected,
+    },
   }
 </script>
 
