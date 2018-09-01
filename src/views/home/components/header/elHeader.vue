@@ -5,11 +5,11 @@
         <img class="avatar" :src="sellerData.avatar" alt="">
       </div>
       <div class="content-right">
-        <h3 class="title">{{sellerData.name}}</h3>
-        <p class="deliver">{{sellerData.description}}/{{}}</p>
+        <h3 class="title"><img :src="BrandPic" alt="">{{sellerData.name}}</h3>
+        <p class="deliver">{{sellerData.description}}/{{sellerData.deliveryTime}}分钟送达</p>
         <p class="full-cut" v-if="sellerData.supports">
           <span>
-            <img :src="SupportsPic" alt="">
+            <img :src="supportsImg" alt="">
           </span>
           {{sellerData.supports[0].description}}
         </p>
@@ -32,7 +32,12 @@
 
 <script>
   import BulletinPic from '@/assets/img/bulletin@2x.png'
-  import SupportsPic from '@/assets/img/decrease_1@2x.png'
+  import BrandPic from '@/assets/img/brand@2x.png'
+  import SupportsPic1 from '@/assets/img/decrease_1@2x.png'
+  import SupportsPic2 from '@/assets/img/discount_2@2x.png'
+  import SupportsPic3 from '@/assets/img/special_2@2x.png'
+  import SupportsPic4 from '@/assets/img/invoice_2@2x.png'
+  import SupportsPic5 from '@/assets/img/guarantee_2@2x.png'
 
   export default {
     name: 'elHeader',
@@ -44,8 +49,26 @@
     },
     data () {
       return {
+        BrandPic,
         BulletinPic,
-        SupportsPic
+        SupportsPic1,
+        SupportsPic2,
+        SupportsPic3,
+        SupportsPic4,
+        SupportsPic5
+      }
+    },
+    computed: {
+      // 用索引和图片进行对应
+      supportsImg () {
+        const imgArr = [
+          this.SupportsPic1,
+          this.SupportsPic2,
+          this.SupportsPic3,
+          this.SupportsPic4,
+          this.SupportsPic5
+        ]
+        return imgArr[this.sellerData.supports[0].type]
       }
     }
   }
@@ -75,7 +98,13 @@
       margin-left: .32rem;
     }
     .title {
+      margin-top: .04rem;
       font-size: 16px;
+      img {
+        width: .6rem;
+        height: .36rem;
+        margin-right: .12rem;
+      }
     }
     .deliver {
       font-size: 14px;
@@ -130,6 +159,7 @@
     }
     .bulletin-text {
       .ell();
+      font-size: 12px;
       flex: 1;
       min-width: 0;
     }
