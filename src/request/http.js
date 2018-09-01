@@ -77,7 +77,7 @@ instance.interceptors.response.use(function (response) {
  * @param needTip {Boolean} 是否需要短提示
  * @returns {Function} 返回调用接口函数
  */
-export const ajaxFunc = (url, method = 'post', needTip = true) => {
+export const ajaxFunc = ({url, method = 'post', needTip = true}) => {
   const errorFunc = (err) => {
     // console.log('请求成功-失败', err)
     if (err.msg) {
