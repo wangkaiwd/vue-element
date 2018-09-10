@@ -1,9 +1,13 @@
 <template>
-  <div class="modal" @click="$emit('update:modalVisible', false)">
+  <div class="modal">
     <div class="modal-content">
       <div class="content-top">
-        <div class="title"></div>
-        <div class="rating"></div>
+        <div class="title">
+          <h3>粥品香坊（大运村）</h3>
+        </div>
+        <div class="rating">
+
+        </div>
       </div>
       <div class="content-middle">
         <div class="favourable"></div>
@@ -11,7 +15,10 @@
       </div>
       <div class="content-bottom">
         <p class="close">
-          <base-icon class="close-icon" icon="close"></base-icon>
+          <base-icon @click="$emit('update:modalVisible', false)"
+                     class="close-icon"
+                     icon="close">
+          </base-icon>
         </p>
       </div>
     </div>
@@ -41,7 +48,8 @@
       text-align: center;
     }
     .close-icon {
-      color: pink;
+      color: rgba(255, 255, 255, .5);
+      font-size: 32px;
     }
   }
 </style>
