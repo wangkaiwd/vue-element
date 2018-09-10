@@ -14,7 +14,7 @@
           {{sellerData.supports[0].description}}
         </p>
       </div>
-      <div class="supports-number" v-if="sellerData.supports">
+      <div class="supports-number" v-if="sellerData.supports" @click="modalVisible=true">
         <span>{{sellerData.supports.length}}个</span>
         <base-icon class="icon-right" icon="right"></base-icon>
       </div>
@@ -22,11 +22,12 @@
     <div class="header-bottom">
       <span class="bulletin"><img :src="BulletinPic" alt=""></span>
       <span class="bulletin-text">{{sellerData.bulletin}}</span>
-      <base-icon class="icon-right" icon="right"></base-icon>
+      <base-icon class="icon-right" icon="right" @click="modalVisible=true"></base-icon>
     </div>
     <div class="background">
       <img :src="sellerData.avatar" alt="">
     </div>
+    <el-modal v-show="modalVisible" :modal-visible.sync="modalVisible"></el-modal>
   </div>
 </template>
 
@@ -38,9 +39,11 @@
   import SupportsPic3 from '@/assets/img/special_2@2x.png'
   import SupportsPic4 from '@/assets/img/invoice_2@2x.png'
   import SupportsPic5 from '@/assets/img/guarantee_2@2x.png'
+  import ElModal from '../modal/modal'
 
   export default {
     name: 'elHeader',
+    components: {ElModal},
     props: {
       sellerData: {
         type: Object,
@@ -55,7 +58,8 @@
         SupportsPic2,
         SupportsPic3,
         SupportsPic4,
-        SupportsPic5
+        SupportsPic5,
+        modalVisible: false,
       }
     },
     computed: {
