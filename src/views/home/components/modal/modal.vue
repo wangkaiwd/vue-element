@@ -10,7 +10,13 @@
         </div>
       </div>
       <div class="content-middle">
-        <div class="favourable"></div>
+        <div class="favourable">
+          <div class="content-title">
+            <div class="title-left"></div>
+            <div class="title-text">优惠信息</div>
+            <div class="title-right"></div>
+          </div>
+        </div>
         <div class="notice"></div>
       </div>
       <div class="content-bottom">
@@ -50,6 +56,18 @@
     .close-icon {
       color: rgba(255, 255, 255, .5);
       font-size: 32px;
+    }
+    .content-title {
+      display: flex;
+      .title-left,
+      .title-right {
+        width: .224rem;
+        color: rgba(255, 255, 255, .2);
+      }
+      .title-text {
+        flex: 1;
+        text-align: center;
+      }
     }
   }
 </style>

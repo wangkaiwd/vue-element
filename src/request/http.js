@@ -3,6 +3,21 @@ import qs from 'qs'
 import { Toast } from 'vant'
 import store from '@/store'
 
+let pending = [] //声明一个数组用于存储每个ajax请求的取消函数和ajax标识
+let timerId = null
+let cancelToken = axios.CancelToken
+let removePending = (config) => {
+  for (let p in pending) {
+    if (pending[p].u === config.url + '&' + config.method) { //当当前请求在数组中存在时执行函数体
+      pending[p].f('请求过于频繁！') //执行取消操作
+      pending.splice(p, 1) //把这条记录从数组中移除
+    }
+  }
+  timerId && clearTimeout(timerId)
+  timerId = setTimeout(() => {
+    pending = []
+  }, 200)
+}
 /**
  * 判断本地存储中的token是否存在，从而在请求头中携带
  * @returns {string} [返回localStorage中的token,或者返回'']
@@ -19,17 +34,18 @@ const getToken = () => {
 const instance = axios.create({
   baseURL: 'https://www.easy-mock.com/mock/5b838e2a445175634e4dbe20/element',
   timeout: 20000,
-  headers: {
-    'app_device': 1,
-    'push_userid': '0',
-  }
 })
 instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 
 // 请求拦截
-instance.interceptors.request.use(function (config) {
+instance.interceptors.request.use((config) => {
   // console.log('请求成功', config)
   const {method, data} = config
+  removePending(config)
+  config.cancelToken = new cancelToken((c) => {
+    // 这里的ajax标识我是用请求地址&请求方式拼接的字符串，当然你可以选择其他的一些方式
+    pending.push({u: config.url + '&' + config.method, f: c})
+  })
   if (method === 'post') {
     config.data = qs.stringify(data)
   }
@@ -40,8 +56,7 @@ instance.interceptors.request.use(function (config) {
     message: '加载中...'
   })
   return config
-}, function (error) {
-  // console.log('请求失败', error)
+}, (error) => {
   return Promise.reject(error)
 })
 //
@@ -78,11 +93,12 @@ instance.interceptors.response.use(function (response) {
  * @returns {Function} 返回调用接口函数
  */
 export const ajaxFunc = ({url, method = 'post', needTip = true}) => {
-  const errorFunc = (err) => {
+  const errorFunc = err => {
     // console.log('请求成功-失败', err)
     if (err.msg) {
       needTip && Toast(err.msg)
     }
+    // err.message && Toast(err.message)
   }
   /**
    * 发起get或post请求
@@ -91,22 +107,17 @@ export const ajaxFunc = ({url, method = 'post', needTip = true}) => {
    * @param error {Function} 失败回调
    */
   return (params, success, error = errorFunc) => {
-    let value, temp
-    if (Object.prototype.toString.call(params) === '[object Function]') {
-      temp = success
-      success = params
-      error = temp
-      params = {}
-    }
+    let value
     method === 'post' ? value = params : value = {params}
+    // value.cancelToken = source.token
     instance[method](url, value)
       .then(
         res => success(res),
         err => error(err)
       )
   }
-}
 
+}
 // USER_TOKEN_NULL(10000, "user_token为空"),
 // USER_PUSH_ID_NULL(10000, "push_userid为空"),
 // APP_DEVICE_NULL(10000, "app_device为空"),
