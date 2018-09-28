@@ -1,13 +1,13 @@
-import { ajaxFunc } from '@/request/http'
+import { ajaxFunc } from '@/request/tool'
 
 const element = {}
 // 商家信息
-element.fetchSeller = ajaxFunc({url: '/seller'})
+element.fetchSeller = ajaxFunc('/seller')
 
 // 商品信息
-element.fetchGoods = ajaxFunc({url: '/goods'})
+element.fetchGoods = ajaxFunc('/goods')
 
 // 评论信息
-element.fetchRatings = ajaxFunc({url: '/ratings'})
+element.fetchRatings = ajaxFunc('/ratings')
 
 export default element

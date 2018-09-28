@@ -10,7 +10,7 @@ Vue.use(Vant)
 import '@/assets/styles/reset'
 import '@/utils/rem.js'
 
-import '@/request/http'
+import '@/request/axiosConfig'
 import Api from '@/api'
 import BaseIcon from '@/components/icon/icon'
 
@@ -24,6 +24,6 @@ new Vue({
   el: '#app',
   router,
   store,
-  components: {App},
-  template: '<App/>',
+  components: { App },
+  template: '<App/>'
 })

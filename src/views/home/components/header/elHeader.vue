@@ -1,5 +1,5 @@
 <template>
-  <div class="header" v-if="Object.keys(sellerData).length">
+  <div class="header">
     <div class="header-content">
       <div class="content-left">
         <img class="avatar" :src="sellerData.avatar" alt="">
