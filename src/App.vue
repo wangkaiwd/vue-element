@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  import DisConnected from '@/components/disConnected/disConnected'
+  import DisConnected from '@/components/disConnected'
 
   export default {
     name: 'App',

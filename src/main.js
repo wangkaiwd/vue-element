@@ -12,7 +12,7 @@ import '@/utils/rem.js'
 
 import '@/request/axiosConfig'
 import Api from '@/api'
-import BaseIcon from '@/components/icon/icon'
+import BaseIcon from '@/components/icon'
 
 Vue.component('base-icon', BaseIcon)
 

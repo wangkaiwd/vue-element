@@ -18,7 +18,8 @@ export const ajaxFunc = (url, method = 'post') => {
   return (params, success, error = errorFunc) => {
     let value
     method === 'post' ? (value = params) : (value = { params })
-    instance[method](url, value).then(res => success(res), err => error(err))
+    instance[method.toLowerCase()](url, value)
+      .then(res => success(res),err => error(err))
   }
 }
 /**
