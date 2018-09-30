@@ -31,9 +31,23 @@
             </ul>
           </div>
         </div>
-        <div class="notice"></div>
+        <div class="notice">
+          <div class="content-title">
+            <div class="title-left">
+              <p class="line"></p>
+            </div>
+            <div class="title-text">商家公告</div>
+            <div class="title-right">
+              <p class="line"></p>
+            </div>
+          </div>
+          <div class="content-list">
+            <p class="introduce"> {{sellerData.bulletin}} </p>
+          </div>
+        </div>
       </div>
-      <div class="content-bottom">
+    </div>
+    <div class="content-bottom">
         <p class="close">
           <base-icon @click="$emit('update:modalVisible', false)"
                      class="close-icon"
@@ -41,7 +55,6 @@
           </base-icon>
         </p>
       </div>
-    </div>
   </div>
 </template>
 
@@ -67,18 +80,26 @@ export default {
   position: fixed;
   left: 0;
   top: 0;
-  height: 100vh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   background-color: rgba(7, 17, 27, 0.8);
+  overflow: scroll;
+  blur: 10px;
   .modal-content {
-    height: 100%;
+    flex: 1;
     padding: 1.28rem 0.72rem 0.64rem;
   }
   .close {
     text-align: center;
   }
   .title {
-    font-size: 16px;
+    h3 {
+      text-align: center;
+      font-weight: 700;
+      font-size: 16px;
+    }
   }
   .rating {
     margin-bottom: 0.56rem;
@@ -100,15 +121,37 @@ export default {
     .title-text {
       flex: 1;
       text-align: center;
+      font-weight: 700;
     }
     .line {
       width: 100%;
       height: 2px;
       background-color: rgba(255, 255, 255, 0.2);
     }
-    .content-list {
-      padding: 0.48rem 0.24rem 0.56rem;
+  }
+  .content-list {
+    font-weight: 200;
+    padding: 0.48rem 0.24rem 0.56rem;
+    .introduce {
+      line-height: 0.48rem;
     }
+  }
+  .list-item {
+    display: flex;
+    font-size: 12px;
+    align-items: center;
+    &:not(:first-child) {
+      margin-top: 0.24rem;
+    }
+    img {
+      width: 0.32rem;
+      height: 0.32rem;
+      margin-right: 0.12rem;
+    }
+  }
+  .content-bottom {
+    margin-top: 0.1rem;
+    height: 0.96rem;
   }
 }
 </style>
