@@ -7,9 +7,8 @@
           <div class="title">
             <h3>{{sellerData.name}}</h3>
           </div>
-          <div class="rating">
-            <img v-for="item in fullStarLeng" :src="stars[0]" alt="">
-            <img v-if="visibleHalfStar" :src="stars[1]" alt="">
+          <div class="rating-wrapper">
+            <rating :score="sellerData.foodScore"></rating>
           </div>
         </div>
         <div class="content-middle">
@@ -64,9 +63,7 @@
 
 <script>
   // fixme: 当modal中的内容超出屏屏幕可以进行滑动时，在ios系统上会显示modal下边的区域
-  import starOn from '@/assets/img/star24_on@2x.png'
-  import starHalf from '@/assets/img/star24_half@2x.png'
-  import starOff from '@/assets/img/star24_off@2x.png'
+  import Rating from '@/components/rating'
 
   export default {
     name: 'modal',
@@ -81,19 +78,9 @@
       }
     },
     data () {
-      return {
-        stars: [starOn, starHalf, starOff]
-      }
+      return {}
     },
-    computed: {
-      fullStarLeng () {
-        return parseInt(this.sellerData.foodScore)
-      },
-      visibleHalfStar () {
-        const {foodScore} = this.sellerData
-        return foodScore > parseInt(foodScore)
-      }
-    },
+    components: {Rating},
     methods: {}
   }
 </script>
@@ -128,17 +115,12 @@
           font-size: 16px;
         }
       }
-      .rating {
+      .rating-wrapper {
         display: flex;
         align-items: center;
         justify-content: center;
         margin-bottom: 0.56rem;
         margin-top: 0.32rem;
-        img {
-          &:not(:last-child) {
-            margin-right: .24rem;
-          }
-        }
       }
       .close-icon {
         color: rgba(255, 255, 255, 0.5);
