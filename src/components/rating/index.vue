@@ -1,13 +1,15 @@
 <template>
   <div class="rating">
-    <img v-for="item in fullStar"
+    <img v-for="(item,i) in fullStar"
          :src="stars[0]"
+         :key="i"
          :style="starStyle">
     <img :style="starStyle"
          v-if="visibleHalfStar"
          :src="stars[1]">
-    <img v-for="item in emptyStar"
+    <img v-for="(item,i) in emptyStar"
          :src="stars[2]"
+         :key="i"
          :style="starStyle">
   </div>
 </template>

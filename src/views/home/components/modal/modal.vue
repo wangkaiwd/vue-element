@@ -63,7 +63,7 @@
 
 <script>
   // fixme: 当modal中的内容超出屏屏幕可以进行滑动时，在ios系统上会显示modal下边的区域
-  import Rating from '@/components/rating'
+  import Rating from '@/components/rating2'
 
   export default {
     name: 'modal',
