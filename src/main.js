@@ -7,8 +7,11 @@ import Vant from 'vant'
 import 'vant/lib/vant-css/index.css'
 
 Vue.use(Vant)
-import '@/assets/styles/reset'
+import '@/assets/styles'
 import '@/utils/rem.js'
+import VConsole from 'vconsole'
+
+new VConsole()
 
 import '@/request/axiosConfig'
 import Api from '@/api'
@@ -24,6 +27,6 @@ new Vue({
   el: '#app',
   router,
   store,
-  components: { App },
+  components: {App},
   template: '<App/>'
 })

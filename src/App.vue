@@ -1,19 +1,18 @@
 <template>
   <div class="index">
-    <dis-connected v-if="network"></dis-connected>
+    <dis-connected v-if="offline"></dis-connected>
     <router-view/>
   </div>
 </template>
 
 <script>
   import DisConnected from '@/components/disConnected'
+  import { mapState } from 'vuex'
 
   export default {
     name: 'App',
     computed: {
-      network () {
-        return this.$store.state.offline
-      }
+      ...mapState(['offline'])
     },
     components: {
       DisConnected,
@@ -22,5 +21,5 @@
 </script>
 
 <style lang="less" scoped>
-
+  .index {-webkit-overflow-scrolling: touch;}
 </style>

@@ -3,7 +3,6 @@
 > Vue 仿饿了么项目
 
 ## rem理解
-### rem实现思路
 > rem:假如`<html>`标签上设置了样式`font-size: 16px`，那么`1rem=16px`
 
 代码演示  
@@ -80,3 +79,4 @@
 
 // DOMContentLoaded事件要绑定到`document`对象上，而load事件要绑定到window上
 ```
+## 移动端`1px`实现

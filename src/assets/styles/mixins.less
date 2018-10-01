@@ -1,3 +1,5 @@
+// css混合器
+
 .ell {
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -8,27 +10,12 @@
 .border-1px (@color) {
   position: relative;
   &:after {
+    content: '';
     position: absolute;
     left: 0;
     bottom: 0;
     width: 100%;
     border-top: 1px solid @color;
-  }
-}
-
-@media (-webkit-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5) {
-  .border-1px {
-    &:after {
-      transform: scale(.7);
-    }
-  }
-}
-
-@media (-webkit-device-pixel-ratio: 2),(min-device-pixel-ratio: 2) {
-  .border-1px {
-    &:after {
-      transform: scale(.5);
-    }
   }
 }
 
