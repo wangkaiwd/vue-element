@@ -13,12 +13,10 @@
 </template>
 
 <script>
-  import RouterLink from 'vant/es/mixins/router-link'
-
   const tabConfig = [
-    {id: 1, name: '商品', to: '/goods'},
-    {id: 2, name: '评论', to: '/ratings'},
-    {id: 3, name: '商家', to: '/seller'},
+    {id: 1, name: '商品', to: '/home/goods'},
+    {id: 2, name: '评论', to: '/home/ratings'},
+    {id: 3, name: '商家', to: '/home/seller'},
   ]
   export default {
     name: 'tabs',
