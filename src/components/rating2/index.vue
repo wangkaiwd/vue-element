@@ -57,7 +57,7 @@
 
   .star-48 {
     .star-item {
-      width: 20px;height: 20px;margin-right: 22px;background-size: 20px 20px;
+      width: .4rem;height: .4rem;margin-right: .44rem;background-size: .4rem .4rem;
       &.on {background-image: url('~@/assets/img/star48_on@2x.png');}
       &.half {background-image: url('~@/assets/img/star48_half@2x.png');}
       &.off {background-image: url('~@/assets/img/star48_off@2x.png');}
@@ -66,7 +66,7 @@
 
   .star-36 {
     .star-item {
-      width: 15px;height: 15px;margin-right: 3px;background-size: 15px 15px;
+      width: .3rem;height: .3rem;margin-right: .06rem;background-size: .3rem .3rem;
       &.on {background-image: url('~@/assets/img/star36_on@2x.png');}
       &.half {background-image: url('~@/assets/img/star36_half@2x.png');}
       &.off {background-image: url('~@/assets/img/star36_off@2x.png');}
@@ -75,7 +75,7 @@
 
   .star-24 {
     .star-item {
-      width: 10px;height: 10px;margin-right: 3px;background-size: 10px 10px;
+      width: .2rem;height: .2rem;margin-right: 0.06rem;background-size: .2rem .2rem;
       &:last-child {margin-right: 0;}
       &.on {background-image: url('~@/assets/img/star24_on@2x.png');}
       &.half {background-image: url('~@/assets/img/star24_half@2x.png');}
