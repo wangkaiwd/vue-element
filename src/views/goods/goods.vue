@@ -1,6 +1,6 @@
 <template>
   <div class="goods">
-    <goods-aside></goods-aside>
+    <goods-aside :goodsData="goodsData"></goods-aside>
     <goods-list></goods-list>
   </div>
 </template>
@@ -11,7 +11,17 @@
 
   export default {
     name: 'goods',
-    components: {GoodsAside, GoodsList}
+    data () {
+      return {
+        goodsData: []
+      }
+    },
+    components: {GoodsAside, GoodsList},
+    mounted () {
+      this.$api.element.fetchGoods({}, res => {
+        this.goodsData = res.goods
+      })
+    }
   }
 </script>
 

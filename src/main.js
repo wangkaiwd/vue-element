@@ -9,9 +9,9 @@ import 'vant/lib/vant-css/index.css'
 Vue.use(Vant)
 import '@/assets/styles'
 import '@/utils/rem.js'
-import VConsole from 'vconsole'
+// import VConsole from 'vconsole'
 
-new VConsole()
+// new VConsole()
 
 import '@/request/axiosConfig'
 import Api from '@/api'

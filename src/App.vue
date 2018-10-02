@@ -1,5 +1,5 @@
 <template>
-  <div class="index">
+  <div class="index" v-cloak>
     <dis-connected v-if="offline"></dis-connected>
     <router-view/>
   </div>
@@ -24,4 +24,6 @@
   .index {
     -webkit-overflow-scrolling: touch;
   }
+
+  [v-cloak] {display: none;}
 </style>

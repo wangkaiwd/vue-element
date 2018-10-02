@@ -41,6 +41,6 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    .tab-content {flex: 1;}
+    .tab-content {flex: 1;overflow: scroll;}
   }
 </style>
