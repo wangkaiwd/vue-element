@@ -4,7 +4,7 @@
       <div class="goods-list-item"
            v-for="(item,i) in goodsData"
            :key="i">
-        <div class="list-title">{{item.name}}</div>
+        <div class="list-title" ref="listTitle">{{item.name}}</div>
         <div class="list-content"
              v-for="(food, i) in item.foods"
              :key="i">
@@ -49,10 +49,28 @@
       }
     },
     mounted () {
-      this.$nextTick(() => this.scroll = new BScroll('.goods-list'))
+      this.init()
     },
     computed: {
-      ...mapState(['selectSide'])
+      ...mapState(['selectSide']),
+    },
+    watch: {
+      selectSide (val) {
+        this.scrollTop(val)
+      }
+    },
+    methods: {
+      init () {
+        this.$nextTick(() => {
+          this.scroll = new BScroll('.goods-list')
+          // todo:这里的定时器为什么需要设置比较长的时间
+          setTimeout(() => this.oTitle = this.$refs.listTitle, 320)
+        })
+      },
+      scrollTop (i) {
+        const {oTitle, scroll} = this
+        scroll.scrollToElement(oTitle[i], 200, true, 0)
+      }
     }
   }
 </script>
