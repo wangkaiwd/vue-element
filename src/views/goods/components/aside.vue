@@ -36,7 +36,7 @@
       }
     },
     mounted () {
-      setTimeout(() => this.scroll = new BScroll(this.$refs.wrapper), 200)
+      this.$nextTick(() => this.scroll = new BScroll('.wrapper'))
     }
   }
 </script>
@@ -49,7 +49,7 @@
     width: 1.6rem;
     background-color: #f3f5f7;
     padding: 0 .24rem;
-    overflow: scroll;
+    overflow: hidden;
     .content {min-height: 100%;}
     .item {
       display: flex;

@@ -1,7 +1,12 @@
 <template>
   <div class="goods">
-    <goods-aside :goodsData="goodsData"></goods-aside>
-    <goods-list></goods-list>
+    <div class="goods-wrapper">
+      <goods-aside :goodsData="goodsData"></goods-aside>
+      <goods-list :goodsData="goodsData"></goods-list>
+    </div>
+    <div class="goods-cart">
+
+    </div>
   </div>
 </template>
 
@@ -27,8 +32,17 @@
 
 <style lang="less" scoped>
   .goods {
-    position: relative;
     display: flex;
     height: 100%;
+    flex-direction: column;
+    .goods-wrapper {
+      display: flex;
+      flex: 1;
+    }
+    .goods-cart {
+      height: .96rem;
+      width: 100%;
+      background-color: #141d27;
+    }
   }
 </style>
