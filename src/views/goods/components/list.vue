@@ -62,7 +62,8 @@
     methods: {
       init () {
         this.$nextTick(() => {
-          this.scroll = new BScroll('.goods-list')
+          this.scroll = new BScroll('.goods-list', {probeType: 2})
+          this.scroll.on('scroll', this.onScroll)
           // todo:这里的定时器为什么需要设置比较长的时间
           setTimeout(() => this.oTitle = this.$refs.listTitle, 320)
         })
@@ -70,7 +71,10 @@
       scrollTop (i) {
         const {oTitle, scroll} = this
         scroll.scrollToElement(oTitle[i], 200, true, 0)
-      }
+      },
+      onScroll ({y}) {
+        console.log(y)
+      },
     }
   }
 </script>
