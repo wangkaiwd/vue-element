@@ -9,6 +9,7 @@
 </template>
 
 <script>
+  // 定义评分星星相关常量
   const LENGTH = 5
   const CLS_ON = 'on'
   const CLS_HALF = 'half'

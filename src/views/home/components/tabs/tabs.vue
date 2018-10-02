@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs">
+  <div class="tabs border-1px">
     <ul class="tabs-list">
       <router-link tag="li"
                    active-class="router-active"
@@ -29,17 +29,20 @@
 </script>
 
 <style lang="less" scoped>
+  @import "~@/assets/styles/mixins.less";
+  @import "~styles/varibale.less";
+
   .tabs {
     height: .8rem;
-    background-color: skyblue;
+    background-color: #fff;
+    .border-1px(@border-color);
     .tabs-list {
       height: 100%;
       display: flex;
       align-items: center;
       justify-content: space-around;
+      color: rgb(77, 85, 93);
     }
-    .router-active {
-      color: rgb(240, 20, 20);
-    }
+    .router-active {color: rgb(240, 20, 20);}
   }
 </style>

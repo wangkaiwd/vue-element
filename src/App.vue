@@ -21,5 +21,7 @@
 </script>
 
 <style lang="less" scoped>
-  .index {-webkit-overflow-scrolling: touch;}
+  .index {
+    -webkit-overflow-scrolling: touch;
+  }
 </style>
