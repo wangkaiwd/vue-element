@@ -38,6 +38,7 @@
 
 <script>
   import BScroll from 'better-scroll'
+  import { mapMutations, mapState } from 'vuex'
 
   export default {
     name: 'GoodsList',
@@ -49,6 +50,9 @@
     },
     mounted () {
       this.$nextTick(() => this.scroll = new BScroll('.goods-list'))
+    },
+    computed: {
+      ...mapState(['selectSide'])
     }
   }
 </script>

@@ -5,7 +5,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     offline: false,
-    loading: false
+    loading: false,
+    selectSide: 0,
   },
   mutations: {
     changeWebStatus (state, status) {
@@ -14,6 +15,9 @@ const store = new Vuex.Store({
     },
     changeLoading (state, status) {
       state.loading = status
+    },
+    updateSelectSide (state, index) {
+      state.selectSide = index
     }
   }
 })

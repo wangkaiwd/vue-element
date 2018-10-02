@@ -2,13 +2,17 @@
   <div class="wrapper" ref="wrapper">
     <ul class="content">
       <li class="item"
+          :class="{active: i === selectSide}"
           v-for="(item,i) in goodsData"
+          @click="updateSelectSide(i)"
           :key="i">
-        <p>
-          <img v-if="imgArray[item.type]"
-               :src="imgArray[item.type]">
-          <span>{{item.name}}</span>
-        </p>
+        <div class="list-wrapper">
+          <p>
+            <img v-if="imgArray[item.type]"
+                 :src="imgArray[item.type]">
+            <span>{{item.name}}</span>
+          </p>
+        </div>
       </li>
     </ul>
   </div>
@@ -21,6 +25,7 @@
   import SupportsPic3 from '@/assets/img/special_3@2x.png'
   import SupportsPic4 from '@/assets/img/invoice_3@2x.png'
   import SupportsPic5 from '@/assets/img/guarantee_3@2x.png'
+  import { mapMutations, mapState } from 'vuex'
 
   export default {
     name: 'GoodsAside',
@@ -32,11 +37,23 @@
     },
     data () {
       return {
-        imgArray: [SupportsPic1, SupportsPic2, SupportsPic3, SupportsPic4, SupportsPic5]
+        imgArray: [SupportsPic1, SupportsPic2, SupportsPic3, SupportsPic4, SupportsPic5],
       }
     },
+    computed: {
+      ...mapState(['selectSide'])
+    },
     mounted () {
-      this.$nextTick(() => this.scroll = new BScroll('.wrapper'))
+      this.$nextTick(() => this.scroll = new BScroll('.wrapper', {
+        scrollY: true,
+        click: true
+      }))
+    },
+    methods: {
+      ...mapMutations(['updateSelectSide']),
+      handleClick (i) {
+        this.updateSelectSide(i)
+      }
     }
   }
 </script>
@@ -48,18 +65,21 @@
   .wrapper {
     width: 1.6rem;
     background-color: #f3f5f7;
-    padding: 0 .24rem;
     overflow: hidden;
     .content {min-height: 100%;}
     .item {
-      display: flex;
-      align-items: center;
-      .border-1px(@border-color);
-      height: 1.08rem;
+      padding: 0 .24rem;
       font-size: 12px;
       font-weight: @font-weight-text;
+      .list-wrapper {
+        display: flex;
+        align-items: center;
+        .border-none;
+        height: 1.08rem;
+      }
       p {line-height: .28rem;}
       img {width: .24rem;vertical-align: middle;}
+      &.active {background-color: #fff;}
     }
   }
 </style>
