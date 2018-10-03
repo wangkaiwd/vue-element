@@ -120,3 +120,7 @@ p {
 整体思路： 
 * 父元素设置`display: table`
 * 子元素设置`display: table-cell;vertical-middle;`进行居中
+
+### 2. 外边距合并
+效果图展示： 
+![margin-fixed](./screenshot/margin-fixed.jpg)

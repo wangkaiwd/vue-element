@@ -81,6 +81,7 @@
 
 <style lang="less" scoped>
   @import '~styles/varibale';
+  @import '~styles/mixins';
 
   .goods-list {
     flex: 1;
@@ -96,7 +97,9 @@
     }
     .list-content {
       display: flex;
-      padding: .34rem;
+      padding: .34rem 0;
+      margin: 0 .34rem;
+      .border-1px(@border-color);
     }
     .content-left {
       width: 1.16rem;
@@ -105,6 +108,8 @@
     .content-right {
       margin-left: .2rem;
       font-size: 10px;
+      flex: 1;
+      min-width: 0;
       color: rgb(147, 153, 159);
       li:not(:first-child) {
         margin-top: .16rem;
@@ -114,6 +119,8 @@
       font-size: 14px;
       color: rgb(7, 17, 27);
     }
+    /*防止文字换行之后没有行高，样式变丑*/
+    .detail {line-height: 1.2;}
     .price-discount {
       font-size: 14px;
       margin-right: .16rem;
