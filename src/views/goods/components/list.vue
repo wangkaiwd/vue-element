@@ -65,19 +65,15 @@
       init () {
         this.$nextTick(() => {
           this.scroll = new BScroll('.goods-list', {probeType: 3})
-          // todo:这里的定时器为什么需要设置比较长的时间
-          setTimeout(() => {
-            this.oTitle = this.$refs.listTitle
-            this.calcHeight()
-            this.scroll.on('scroll', this.onScroll)
-          }, 340)
+          this.oTitle = this.$refs.listTitle
+          this.calcHeight()
+          this.scroll.on('scroll', this.onScroll)
         })
       },
-      // scrollTop (i) {
-      //   console.log('element', i)
-      //   const {oTitle, scroll} = this
-      //   scroll.scrollToElement(oTitle[i], 300)
-      // },
+      scrollTop (i) {
+        const {oTitle, scroll} = this
+        scroll.scrollToElement(oTitle[i], 200)
+      },
       onScroll ({y}) {
         // for (let i = 0; i < this.heights.length; i++) {
         //   const minVal = this.heights[i]
@@ -89,11 +85,12 @@
         // }
         // this.updateSelectSide(0)
 
+        // 当-y = height的时候，会进入下一个商品，此时左侧激活的列表应该是下一个
         let i = this.heights.findIndex(height => -y < height)
         this.updateSelectSide(i)
       },
       calcHeight () {
-        const array = [0]
+        const array = []
         // Array.from(): 从一个类似数组或可迭代对象中创建一个新的数组实例
         // const oContent = Array.from(this.$refs.listItem)
         const oContent = this.$refs.listItem

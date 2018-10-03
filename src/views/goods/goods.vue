@@ -5,7 +5,10 @@
         不过在这里可以练习组件传参
       -->
       <goods-aside @scrollToEl="scrollToEl" :goodsData="goodsData"></goods-aside>
-      <goods-list :goodsData="goodsData"></goods-list>
+      <goods-list ref="goodsList"
+                  v-if="goodsData.length"
+                  :goodsData="goodsData">
+      </goods-list>
     </div>
     <div class="goods-cart">
 
@@ -31,8 +34,9 @@
       })
     },
     methods: {
-      scrollToEl () {
-
+      scrollToEl (i) {
+        // console.log(this.$refs.goodsList.scrollTop(i))
+        this.$refs.goodsList.scrollTop(i)
       }
     }
   }
