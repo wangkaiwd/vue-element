@@ -131,7 +131,9 @@ p {
 实例上的属性和方法。  
 
 在项目中，我把商品页面的左侧边栏和右侧展示详情分为俩个组件，当点击左侧边栏相应的
-分类时，要展示右侧对应的内容，即需要执行让右边移动到相应位置的方法。有三种实现方法
+分类时，要展示右侧对应的内容，即需要执行让右边移动到相应位置的方法。  
+
+实现方法一：  
 * 将左侧边栏对应的索引值通知给父组件
 * 父组件在收到通知后直接调用子组件中的方法
 ```js
@@ -154,3 +156,47 @@ methods: {
              :goodsData="goodsData">
 </goods-aside>
 ```
+
+实现方法二：
+* 将左侧边栏对应的索引值通知给父组件
+* 父组件将索引值传递个右侧`list`组件
+* 右侧`list`组件监听(`watch`)索引值的变化，执行对应的方法
+```js
+// aside组件
+methods: {
+  handleClick (i, e) {
+    // 使用了better-scroll时，会在原有浏览器点击事件基础上再派发一个点击事件
+    // 这行代码当触发浏览器点击事件时return
+    if (!e._constructed) {
+      return
+    }
+    this.updateSelectSide(i)
+    this.$emit('scrollToEl', i)
+  }
+}
+
+// foods组件
+<goods-aside @scrollToEl="position=$event"
+             :goodsData="goodsData">
+</goods-aside>
+<goods-list v-if="goodsData.length"
+            :position="position"
+            :goodsData="goodsData">
+</goods-list>
+
+// list组件
+props: {
+  position: {
+    type: Number,
+    required: true
+  }
+},
+watch: {
+  position (val) {
+    this.scrollTop(val)
+  }
+}
+```
+
+实现方法三：
+* 通过`Vuex`或者`eventBus`和依赖注入(`provide,inject`)实现兄弟组件通信
