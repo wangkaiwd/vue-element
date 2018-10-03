@@ -80,3 +80,43 @@
 // DOMContentLoaded事件要绑定到`document`对象上，而load事件要绑定到window上
 ```
 ## 移动端`1px`实现
+
+
+## 布局技巧
+
+### 1. 侧边栏多行居中
+要实现的效果图:
+![table](./screenshot/table.png)
+
+页面`html`结构：
+```html
+<ul>
+  <li>
+    <p>
+      <img src="" alt="">
+      <span></span> 
+    </p>
+  </li>
+...
+</ul>
+```
+通过`display:table`来进行居中：
+```css
+li {
+  display: table;
+  /*设置为display:table之后，宽度会由内容撑开，这里要进行指定*/
+  width: 100px;
+}
+p {
+  /*相当于表格中的td标签*/
+  display: table-cell;
+  /*居中*/
+  vertical-align: middle;
+  /*文本间距，美化样式*/
+  line-height: 14px;
+}
+```
+
+整体思路： 
+* 父元素设置`display: table`
+* 子元素设置`display: table-cell;vertical-middle;`进行居中

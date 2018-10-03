@@ -6,13 +6,13 @@
           v-for="(item,i) in goodsData"
           @click="updateSelectSide(i)"
           :key="i">
-        <div class="list-wrapper">
-          <p>
-            <img v-if="imgArray[item.type]"
-                 :src="imgArray[item.type]">
-            <span>{{item.name}}</span>
-          </p>
-        </div>
+        <!--<div class="list-wrapper">-->
+        <p class="border-1px">
+          <img v-if="imgArray[item.type]"
+               :src="imgArray[item.type]">
+          <span>{{item.name}}</span>
+        </p>
+        <!--</div>-->
       </li>
     </ul>
   </div>
@@ -71,15 +71,20 @@
       padding: 0 .24rem;
       font-size: 12px;
       font-weight: @font-weight-text;
-      .list-wrapper {
-        display: flex;
-        align-items: center;
-        .border-none;
-        height: 1.08rem;
+      display: table;
+      width: 100%;
+      height: 1.08rem;
+      p {
+        display: table-cell;
+        vertical-align: middle;
+        line-height: .28rem;
+        .border-1px(@border-color);
       }
-      p {line-height: .28rem;}
       img {width: .24rem;vertical-align: middle;}
-      &.active {background-color: #fff;}
+      &.active {
+        background-color: #fff;
+        p {.border-none;}
+      }
     }
   }
 </style>
