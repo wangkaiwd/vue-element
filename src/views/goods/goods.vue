@@ -1,6 +1,9 @@
 <template>
   <div class="goods">
     <div class="goods-wrapper">
+      <!--这里其实没有必要将这俩部分进行组件拆分，拆分之后会增加组件的复杂程度
+        不过在这里可以练习组件传参
+      -->
       <goods-aside :goodsData="goodsData"></goods-aside>
       <goods-list :goodsData="goodsData"></goods-list>
     </div>

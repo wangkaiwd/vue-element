@@ -80,19 +80,14 @@
 </script>
 
 <style lang="less" scoped>
+  @import '~styles/varibale';
+
   .goods-list {
     flex: 1;
     overflow: hidden;
     .list-title {
-      &:before {
-        display: inline-block;
-        margin-right: .28rem;
-        vertical-align: top;
-        content: '';
-        height: 100%;
-        width: 2px;
-        background-color: #d9dde1;
-      }
+      padding-left: .28rem;
+      border-left: 2px solid @border-color;
       font-size: 12px;
       color: rgb(147, 153, 159);
       height: .52rem;
