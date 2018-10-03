@@ -2,6 +2,7 @@
   <div class="goods-list">
     <div class="goods-list-item-wrapper">
       <div class="goods-list-item"
+           ref="listItem"
            v-for="(item,i) in goodsData"
            :key="i">
         <div class="list-title" ref="listTitle">{{item.name}}</div>
@@ -60,12 +61,16 @@
       }
     },
     methods: {
+      ...mapMutations(['updateSelectSide']),
       init () {
         this.$nextTick(() => {
           this.scroll = new BScroll('.goods-list', {probeType: 2})
-          this.scroll.on('scroll', this.onScroll)
           // todo:这里的定时器为什么需要设置比较长的时间
-          setTimeout(() => this.oTitle = this.$refs.listTitle, 320)
+          setTimeout(() => {
+            this.oTitle = this.$refs.listTitle
+            this.calcHeight()
+            this.scroll.on('scroll', this.onScroll)
+          }, 320)
         })
       },
       scrollTop (i) {
@@ -73,8 +78,19 @@
         scroll.scrollToElement(oTitle[i], 200, true, 0)
       },
       onScroll ({y}) {
-        console.log(y)
+        let i = this.heights.findIndex(height => -y < height)
+        this.updateSelectSide(i)
       },
+      calcHeight () {
+        const array = []
+        const oContent = this.$refs.listItem
+        let sum = 0
+        for (let i = 0; i < oContent.length; i++) {
+          sum += oContent[i].offsetHeight
+          array.push(sum)
+        }
+        this.heights = array
+      }
     }
   }
 </script>
