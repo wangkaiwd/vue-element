@@ -55,40 +55,62 @@
     computed: {
       ...mapState(['selectSide']),
     },
-    watch: {
-      selectSide (val) {
-        this.scrollTop(val)
-      }
-    },
+    // watch: {
+    //   selectSide (val) {
+    //     this.scrollTop(val)
+    //   }
+    // },
     methods: {
       ...mapMutations(['updateSelectSide']),
       init () {
         this.$nextTick(() => {
-          this.scroll = new BScroll('.goods-list', {probeType: 2})
+          this.scroll = new BScroll('.goods-list', {probeType: 3})
           // todo:这里的定时器为什么需要设置比较长的时间
           setTimeout(() => {
             this.oTitle = this.$refs.listTitle
             this.calcHeight()
             this.scroll.on('scroll', this.onScroll)
-          }, 320)
+          }, 340)
         })
       },
-      scrollTop (i) {
-        const {oTitle, scroll} = this
-        scroll.scrollToElement(oTitle[i], 200, true, 0)
-      },
+      // scrollTop (i) {
+      //   console.log('element', i)
+      //   const {oTitle, scroll} = this
+      //   scroll.scrollToElement(oTitle[i], 300)
+      // },
       onScroll ({y}) {
+        // for (let i = 0; i < this.heights.length; i++) {
+        //   const minVal = this.heights[i]
+        //   const maxVal = this.heights[i + 1]
+        //   if (maxVal && (-y > minVal && -y < maxVal)) {
+        //     this.updateSelectSide(i)
+        //     return
+        //   }
+        // }
+        // this.updateSelectSide(0)
+
         let i = this.heights.findIndex(height => -y < height)
         this.updateSelectSide(i)
       },
       calcHeight () {
-        const array = []
+        const array = [0]
+        // Array.from(): 从一个类似数组或可迭代对象中创建一个新的数组实例
+        // const oContent = Array.from(this.$refs.listItem)
         const oContent = this.$refs.listItem
         let sum = 0
         for (let i = 0; i < oContent.length; i++) {
           sum += oContent[i].offsetHeight
           array.push(sum)
         }
+        // oContent.reduce((count, item) => {
+        //   if (count.offsetHeight) {
+        //     array.push(count.offsetHeight)
+        //     return count.offsetHeight + item.offsetHeight
+        //   }
+        //   array.push(count)
+        //   return count + item.offsetHeight
+        // })
+        // console.log(array)
         this.heights = array
       }
     }

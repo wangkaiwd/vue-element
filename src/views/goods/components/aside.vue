@@ -4,7 +4,7 @@
       <li class="item"
           :class="{active: i === selectSide}"
           v-for="(item,i) in goodsData"
-          @click="updateSelectSide(i)"
+          @click="handleClick(i,$event)"
           :key="i">
         <!--<div class="list-wrapper">-->
         <p class="border-1px">
@@ -45,14 +45,17 @@
     },
     mounted () {
       this.$nextTick(() => this.scroll = new BScroll('.wrapper', {
-        scrollY: true,
         click: true
       }))
     },
     methods: {
       ...mapMutations(['updateSelectSide']),
-      handleClick (i) {
+      handleClick (i, e) {
+        if (!e._constructed) {
+          return
+        }
         this.updateSelectSide(i)
+        this.$emit('scrollToEl', i)
       }
     }
   }
@@ -82,6 +85,11 @@
       }
       img {width: .24rem;vertical-align: middle;}
       &.active {
+        /*遮住上方的border*/
+        position: relative;
+        z-index: 1;
+        margin-top: -1px;
+        font-weight: 700;
         background-color: #fff;
         p {.border-none;}
       }
