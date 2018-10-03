@@ -4,17 +4,15 @@
       <!--这里其实没有必要将这俩部分进行组件拆分，拆分之后会增加组件的复杂程度
         不过在这里可以练习组件传参
       -->
-      <goods-aside @scrollToEl="position=$event"
+      <goods-aside @scrollToEl="$refs.goodsList.scrollTop($event)"
                    :goodsData="goodsData">
       </goods-aside>
       <goods-list ref="goodsList"
                   v-if="goodsData.length"
-                  :position="position"
                   :goodsData="goodsData">
       </goods-list>
     </div>
     <div class="goods-cart">
-
     </div>
   </div>
 </template>
@@ -28,7 +26,6 @@
     data () {
       return {
         goodsData: [],
-        position: 0,
       }
     },
     components: {GoodsAside, GoodsList},

@@ -48,21 +48,12 @@
         type: Array,
         required: true
       },
-      position: {
-        type: Number,
-        required: true
-      }
     },
     mounted () {
       this.init()
     },
     computed: {
       ...mapState(['selectSide']),
-    },
-    watch: {
-      position (val) {
-        this.scrollTop(val)
-      }
     },
     methods: {
       ...mapMutations(['updateSelectSide']),
@@ -90,7 +81,6 @@
         this.heights = array
       },
       scrollTop (i) {
-        console.log('i')
         const {oTitle, scroll} = this
         scroll.scrollToElement(oTitle[i], 200)
       },

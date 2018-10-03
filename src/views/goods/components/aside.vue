@@ -6,13 +6,11 @@
           v-for="(item,i) in goodsData"
           @click="handleClick(i,$event)"
           :key="i">
-        <!--<div class="list-wrapper">-->
         <p class="border-1px">
           <img v-if="imgArray[item.type]"
                :src="imgArray[item.type]">
           <span>{{item.name}}</span>
         </p>
-        <!--</div>-->
       </li>
     </ul>
   </div>
