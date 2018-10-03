@@ -47,6 +47,10 @@
       goodsData: {
         type: Array,
         required: true
+      },
+      position: {
+        type: Number,
+        required: true
       }
     },
     mounted () {
@@ -55,11 +59,11 @@
     computed: {
       ...mapState(['selectSide']),
     },
-    // watch: {
-    //   selectSide (val) {
-    //     this.scrollTop(val)
-    //   }
-    // },
+    watch: {
+      position (val) {
+        this.scrollTop(val)
+      }
+    },
     methods: {
       ...mapMutations(['updateSelectSide']),
       init () {
@@ -70,46 +74,26 @@
           this.scroll.on('scroll', this.onScroll)
         })
       },
-      scrollTop (i) {
-        const {oTitle, scroll} = this
-        scroll.scrollToElement(oTitle[i], 200)
-      },
       onScroll ({y}) {
-        // for (let i = 0; i < this.heights.length; i++) {
-        //   const minVal = this.heights[i]
-        //   const maxVal = this.heights[i + 1]
-        //   if (maxVal && (-y > minVal && -y < maxVal)) {
-        //     this.updateSelectSide(i)
-        //     return
-        //   }
-        // }
-        // this.updateSelectSide(0)
-
         // 当-y = height的时候，会进入下一个商品，此时左侧激活的列表应该是下一个
         let i = this.heights.findIndex(height => -y < height)
         this.updateSelectSide(i)
       },
       calcHeight () {
         const array = []
-        // Array.from(): 从一个类似数组或可迭代对象中创建一个新的数组实例
-        // const oContent = Array.from(this.$refs.listItem)
         const oContent = this.$refs.listItem
         let sum = 0
         for (let i = 0; i < oContent.length; i++) {
           sum += oContent[i].offsetHeight
           array.push(sum)
         }
-        // oContent.reduce((count, item) => {
-        //   if (count.offsetHeight) {
-        //     array.push(count.offsetHeight)
-        //     return count.offsetHeight + item.offsetHeight
-        //   }
-        //   array.push(count)
-        //   return count + item.offsetHeight
-        // })
-        // console.log(array)
         this.heights = array
-      }
+      },
+      scrollTop (i) {
+        console.log('i')
+        const {oTitle, scroll} = this
+        scroll.scrollToElement(oTitle[i], 200)
+      },
     }
   }
 </script>
