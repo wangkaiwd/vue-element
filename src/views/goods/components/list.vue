@@ -24,7 +24,7 @@
                   <span class="price-discount">
                     <span class="currency">￥</span>{{food.price}}
                   </span>
-                  <span v-if="food.oldPrice" class="price-old"><del>￥{{food.oldPrice}}</del></span>
+                  <span v-if="food.oldPrice" class="price-old">￥{{food.oldPrice}}</span>
                 </div>
                 <div class="plus-button"></div>
               </li>
@@ -126,12 +126,11 @@
       margin-right: .16rem;
       color: #f01414;
     }
-    .currency {
-      color: #f01414;
-    }
+    .currency {color: #f01414;}
     .sale {
       display: flex;
       span {margin-right: .24rem;}
     }
+    .price-old {text-decoration: line-through;}
   }
 </style>
