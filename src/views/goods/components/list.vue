@@ -61,7 +61,7 @@
       ...mapMutations(['updateSelectSide']),
       init () {
         this.$nextTick(() => {
-          this.scroll = new BScroll('.goods-list', {probeType: 3})
+          this.scroll = new BScroll('.goods-list', {probeType: 3, click: true})
           this.oTitle = this.$refs.listTitle
           this.calcHeight()
           this.scroll.on('scroll', this.onScroll)

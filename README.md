@@ -200,3 +200,26 @@ watch: {
 
 实现方法三：
 * 通过`Vuex`或者`eventBus`和依赖注入(`provide,inject`)实现兄弟组件通信
+
+### `v-if`和`v-show`
+> **注意，`v-show`不支持`template`,也不支持`v-else`**
+
+`v-show`: 根据条件展示元素选项，`v-show`的元素始终会被渲染并保留在`DOM`中。
+`v-show`只是简单的切换元素的`css`属性`display`  
+
+在封装`CartControl`组件的时候，由于要通过`template`(不想多添加`html`标签影响布局)
+控制减少商品按钮和展示数字的内容，只能使用`v-if`。
+```html
+<div class="cart-control">
+  <!--这里一定要使用v-if,v-show不支持template元素，也不支持v-else-->
+  <template v-if="visible">
+    <div class="left-button" @click="reduce">
+      <base-icon icon="reduce"></base-icon>
+    </div>
+    <div class="number">10</div>
+  </template>
+  <div class="right-button" @click="plus">
+    <base-icon icon="plus"></base-icon>
+  </div>
+</div>
+```
