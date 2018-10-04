@@ -27,7 +27,7 @@
                   </span>
                   <span v-if="food.oldPrice" class="price-old">￥{{food.oldPrice}}</span>
                 </div>
-                <div class="plus-button"></div>
+                <cart-control></cart-control>
               </li>
             </ul>
           </div>
@@ -40,6 +40,7 @@
 <script>
   import BScroll from 'better-scroll'
   import { mapMutations, mapState } from 'vuex'
+  import CartControl from '@/components/cartControl'
 
   export default {
     name: 'GoodsList',
@@ -49,6 +50,7 @@
         required: true
       },
     },
+    components: {CartControl},
     mounted () {
       this.init()
     },
@@ -139,6 +141,10 @@
     .sale {
       display: flex;
       span {margin-right: .24rem;}
+    }
+    .money {
+      display: flex;
+      justify-content: space-between;
     }
     .price-old {text-decoration: line-through;}
   }

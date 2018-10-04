@@ -1,8 +1,12 @@
 <template>
   <div class="goods-cart">
-    <div class="goods-cart-container" @click="visibleList=!visibleList">
+    <div class="goods-cart-container"
+         @click="visibleList=!visibleList">
       <div class="cart-icon">
         <div class="shop-cart-wrapper">
+          <div class="badge">
+            10
+          </div>
           <base-icon class="shop-cart" icon="cart"></base-icon>
         </div>
         <span class="price">￥0</span>
@@ -54,7 +58,22 @@
       display: flex;height: .96rem;line-height: .96rem;background-color: #141d27;
       color: rgba(255, 255, 255, .4);
     }
-    .cart-icon {font-size: 16px;padding: 0 .24rem;
+    .cart-icon {font-size: 16px;padding: 0 .24rem;}
+    .badge {
+      position: absolute;
+      z-index: 3;
+      top: 0;
+      right: 0;
+      width: .48rem;
+      height: .3rem;
+      background-color: rgb(240, 20, 20);
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .4);
+      border-radius: .12rem;
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
     }
     .shop-cart-wrapper {
       position: relative;z-index: 1;float: left;width: 1.12rem;height: 1.12rem;
