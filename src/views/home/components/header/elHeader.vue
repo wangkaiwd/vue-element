@@ -71,7 +71,6 @@
     computed: {
       // 用索引和图片进行对应
       supportsImg () {
-        console.log('header')
         const imgArr = [
           this.SupportsPic1,
           this.SupportsPic2,
