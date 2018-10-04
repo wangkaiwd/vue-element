@@ -12,14 +12,14 @@
                   :goodsData="goodsData">
       </goods-list>
     </div>
-    <div class="goods-cart">
-    </div>
+    <goods-cart></goods-cart>
   </div>
 </template>
 
 <script>
   import GoodsAside from './components/aside'
   import GoodsList from './components/list'
+  import GoodsCart from './components/cart'
 
   export default {
     name: 'goods',
@@ -28,7 +28,7 @@
         goodsData: [],
       }
     },
-    components: {GoodsAside, GoodsList},
+    components: {GoodsAside, GoodsList, GoodsCart},
     mounted () {
       this.$api.element.fetchGoods({}, res => {
         this.goodsData = res.goods
@@ -46,11 +46,6 @@
     .goods-wrapper {
       display: flex;
       flex: 1;
-    }
-    .goods-cart {
-      height: .96rem;
-      width: 100%;
-      background-color: #141d27;
     }
   }
 </style>

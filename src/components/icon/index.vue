@@ -21,6 +21,7 @@
 <style lang="less" scoped>
   .base-icon {
     display: inline-block;
+    vertical-align: top;
     .icon {
       width: 1em;
       height: 1em;

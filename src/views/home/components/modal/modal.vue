@@ -92,7 +92,7 @@
     top: 0;
     height: 100vh;
     width: 100%;
-    z-index: 1;
+    z-index: 99;
     /*为一个元素后面区域添加图形效果，实现功能，只有在IOS上可以正常使用*/
     backdrop-filter: blur(10px);
     .modal {
