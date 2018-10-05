@@ -1,12 +1,14 @@
 <template>
   <div class="cart-control">
     <!--这里一定要使用v-if,v-show不支持template元素，也不支持v-else-->
-    <template v-if="visible">
-      <div class="left-button" @click="reduce">
-        <base-icon icon="reduce"></base-icon>
+    <transition name="move">
+      <div class="left-wrapper" v-if="visible">
+        <div class="left-button" @click="reduce">
+          <base-icon icon="reduce"></base-icon>
+        </div>
+        <div class="number">10</div>
       </div>
-      <div class="number">10</div>
-    </template>
+    </transition>
     <div class="right-button" @click="plus">
       <base-icon icon="plus"></base-icon>
     </div>
@@ -23,7 +25,6 @@
     },
     methods: {
       reduce () {
-
       },
       plus () {
         console.log('visible', this.visible)
@@ -39,6 +40,8 @@
   .cart-control {
     display: flex;
     align-items: center;
+    overflow: hidden;
+    .left-wrapper {display: flex;align-items: center;}
     .right-button,
     .left-button {
       font-size: 24px;
@@ -46,6 +49,15 @@
       color: @blue;
     }
     .number {width: .48rem;text-align: center;}
+    .move-enter,
+    .move-leave-to {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    .move-enter-active,
+    .move-leave-active {
+      transition: all 1s;
+    }
   }
 
 </style>
