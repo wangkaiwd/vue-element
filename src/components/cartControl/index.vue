@@ -6,7 +6,7 @@
         <div class="left-button" @click="reduce">
           <base-icon icon="reduce"></base-icon>
         </div>
-        <div class="number">10</div>
+        <div class="number">2</div>
       </div>
     </transition>
     <div class="right-button" @click="plus">
@@ -18,16 +18,21 @@
 <script>
   export default {
     name: 'CartControl',
+    props: {
+      expand: {
+        type: Boolean,
+        default: false
+      }
+    },
     data () {
       return {
-        visible: false
+        visible: this.expand
       }
     },
     methods: {
       reduce () {
       },
       plus () {
-        console.log('visible', this.visible)
         this.visible = !this.visible
       }
     }
@@ -48,7 +53,12 @@
       border-radius: 50%;
       color: @blue;
     }
-    .number {width: .48rem;text-align: center;}
+    .number {
+      width: .48rem;
+      text-align: center;
+      font-size: 12px;
+      color: #93999f;
+    }
     .move-enter,
     .move-leave-to {
       transform: translateX(100%);
@@ -56,7 +66,7 @@
     }
     .move-enter-active,
     .move-leave-active {
-      transition: all 1s;
+      transition: all .6s;
     }
   }
 

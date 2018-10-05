@@ -1,7 +1,7 @@
 <template>
   <div class="goods-cart">
     <div class="goods-cart-container"
-         @click="visibleList=!visibleList">
+         @click="showCartList">
       <div class="cart-icon">
         <div class="shop-cart-wrapper">
           <div class="badge">
@@ -26,9 +26,12 @@
           </div>
           <div class="goods-content">
             <ul>
-              <li>list1</li>
-              <li>list2</li>
-              <li>list3</li>
+              <li v-for="(item,i) in 20" :key="i">list1
+                <div class="right-wrapper">
+                  <span class="currency">￥</span><span class="cart-price">10</span>
+                  <cart-control :expand="true"></cart-control>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
@@ -38,11 +41,35 @@
 </template>
 
 <script>
+  import cartControl from '@/components/cartControl'
+  import BScroll from 'better-scroll'
+
   export default {
     name: 'GoodsCart',
+    components: {cartControl},
     data () {
       return {
-        visibleList: false
+        visibleList: false,
+        count: 0
+      }
+    },
+    mounted () {
+      // setTimeout(() => {
+      //   console.log('1', document.querySelector('.goods-content'))
+      //   this.scroll = new BScroll('.goods-content', {click: true})
+      // }, 1000)
+    },
+    methods: {
+      showCartList () {
+        this.visibleList = !this.visibleList
+        if (this.count === 0) {
+          this.$nextTick(() => {
+            this.scroll = new BScroll('.goods-content', {
+              click: true
+            })
+          })
+        }
+        this.count++
       }
     }
   }
@@ -132,6 +159,28 @@
         font-size: 12px;
         color: @blue;
       }
+    }
+    .goods-content {
+      padding: 0 .36rem;
+      max-height: 4.43rem;
+      overflow: hidden;
+      li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: .96rem;
+      }
+      .right-wrapper {
+        display: flex;
+        align-items: center;
+      }
+      .cart-price {
+        font-size: 14px;
+        margin-right: .24rem;
+        font-weight: bold;
+        color: rgb(240, 20, 20);
+      }
+      .currency {font-size: 10px;color: rgb(240, 20, 20);}
     }
   }
 </style>
