@@ -19,10 +19,10 @@
   export default {
     name: 'CartControl',
     props: {
-      expand: {
-        type: Boolean,
-        default: false
-      },
+      // expand: {
+      //   type: Boolean,
+      //   default: false
+      // },
       food: {
         type: Object,
         default () {
@@ -34,8 +34,12 @@
     },
     data () {
       return {
-        visible: this.expand,
         copyFood: {}
+      }
+    },
+    computed: {
+      visible () {
+        return this.food.count > 0
       }
     },
     mounted () {
@@ -44,9 +48,6 @@
       reduce () {
         this.copyFood = JSON.parse(JSON.stringify(this.food))
         this.copyFood.count--
-        if (this.copyFood.count <= 0) {
-          this.visible = false
-        }
         this.$emit('updateFood', this.copyFood)
       },
       plus () {
@@ -55,7 +56,6 @@
           this.copyFood.count = 0
         }
         this.copyFood.count++
-        this.visible = true
         this.$emit('updateFood', this.copyFood)
       }
     }
@@ -75,7 +75,7 @@
       font-size: 24px;
       border-radius: 50%;
       color: @blue;
-      transition: all .6s;
+      transition: all .4s;
     }
     .number {
       width: .48rem;
@@ -95,7 +95,7 @@
     */
     .move-enter-active,
     .move-leave-active {
-      transition: all .6s;
+      transition: all .4s;
     }
   }
 
