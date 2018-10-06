@@ -223,3 +223,56 @@ watch: {
   </div>
 </div>
 ```
+
+### [`Vue`响应式](https://cn.vuejs.org/v2/guide/list.html#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9)
+> 响应式：视图层（页面中）
+
+由于`JavaScript`的限制，`Vue`不能检测以下变动的数组：  
+1. 当你利用索引直接修改一个项时，例如：`vm.items[indexOfItem] = newValue`
+2. 当你修改数组长度时，例如：`vm.items.length = newValue`
+
+还是由于`JavaScript`的限制，`Vue`不能检测**对象属性的添加或删除**：
+```js
+var vm = new Vue({
+  data: {
+    a: 1
+  }
+})
+// vm.a是响应式
+vm.b = 2;
+// vm.b不是响应式
+```
+可以使用`vm.$set`方法来实现响应式：  
+```js
+// 数组
+// vm.items: 要操作的数组，indexOfItem:要修改数组中对应项的索引，newValue:修改后的值
+vm.$set(vm.items,indexOfItem,newValue)
+
+// 对象
+vm.$set(object,key,value)
+```
+
+项目使用场景： 
+* 由孙子组件将值传回，并将对应的索引传回，根据索引来修改原数组
+* 由孙子组件将值传回，在原有对象上先添加一个属性，并赋值
+```js
+updateFood (data, index1, index2) {
+  // this.goodsData[index2].foods[index1].count = data.count
+  // 对象添加一个新的属性
+  this.$set(this.goodsData[index2].foods[index1], 'count', data.count)
+  //这里要用三等号，因为item.name === data.name这是条件语句，而不是赋值语句
+  const temp = this.selectFood.findIndex(item => item.name === data.name)
+  if (temp > -1) {
+    // 利用索引直接设置一个项时，vue不能在视图层检测到数组的变动
+    // this.selectFood[temp].count = data.count
+    // 根据索引值来修改数组
+    this.$set(this.selectFood, temp, data)
+  } else {
+    this.selectFood.push(data)
+  }
+},
+updateSelectFood (data, index) {
+  // 根据索引值来修改数组
+  this.$set(this.selectFood, index, data)
+}
+```

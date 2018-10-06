@@ -26,6 +26,12 @@
 
   export default {
     name: 'goods',
+    props: {
+      seller: {
+        type: Object,
+        required: true
+      }
+    },
     data () {
       return {
         goodsData: [],

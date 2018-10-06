@@ -3,7 +3,8 @@
     <el-header :sellerData="sellerData"></el-header>
     <el-tabs></el-tabs>
     <div class="tab-content">
-      <router-view></router-view>
+      <!--可以通过router-view将想要的数据传递到子组件-->
+      <router-view :seller="sellerData"></router-view>
     </div>
   </div>
 </template>
