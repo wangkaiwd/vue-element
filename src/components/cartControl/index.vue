@@ -52,6 +52,7 @@
       font-size: 24px;
       border-radius: 50%;
       color: @blue;
+      transition: all .6s;
     }
     .number {
       width: .48rem;
@@ -59,11 +60,16 @@
       font-size: 12px;
       color: #93999f;
     }
+    /*在开始的第一帧和结束的最后一帧进行过渡动画*/
     .move-enter,
     .move-leave-to {
       transform: translateX(100%);
       opacity: 0;
+      .left-button {transform: rotate(360deg);}
     }
+    /*加了类之后的动画要在上面2个类中添加，因为active类会在消失和出现的过程中一直都存在
+      这个类消失说明消失和出现的过程已经结束了
+    */
     .move-enter-active,
     .move-leave-active {
       transition: all .6s;
