@@ -47,11 +47,11 @@
       })
     },
     methods: {
-      updateFood (data, index1, index2) {
-        // this.goodsData[index2].foods[index1].count = data.count
-        data.index2 = index2
-        data.index1 = index1
-        this.$set(this.goodsData[index2].foods, index1, data)
+      updateFood (data, secondLevelIndex, firstLevelIndex) {
+        // this.goodsData[firstLevelIndex].foods[secondLevelIndex].count = data.count
+        data.firstLevelIndex = firstLevelIndex
+        data.secondLevelIndex = secondLevelIndex
+        this.$set(this.goodsData[firstLevelIndex].foods, secondLevelIndex, data)
         //这里要用三等号，因为item.name === data.name这是条件语句，而不是赋值语句
         const temp = this.selectFood.findIndex(item => item.name === data.name)
         if (temp > -1) {
@@ -68,9 +68,10 @@
       },
       updateSelectFood (data, index) {
         // 正常情况下，列表中的每一个项都要有一个唯一标识的id来进行匹配
-        this.$set(this.goodsData[data.index2].foods, data.index1, data)
+        this.$set(this.goodsData[data.firstLevelIndex].foods, data.secondLevelIndex, data)
         if (data.count <= 0) {
-          this.selectFood.splice(index, 1)
+          const temp = this.selectFood.findIndex(item => item.name === data.name)
+          this.selectFood.splice(temp, 1)
           return
         }
         this.$set(this.selectFood, index, data)

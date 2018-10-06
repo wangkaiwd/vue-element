@@ -23,12 +23,23 @@
       </div>
     </div>
     <transition name="slide">
-      <div class="goods-cart-modal" v-if="selectFood.length>0" v-show="visibleList">
+      <div class="goods-cart-modal" v-show="showList">
         <div class="goods-list">
           <div class="goods-title">
             <span>购物车</span> <span class="clear">清空</span>
           </div>
           <div class="goods-content">
+            <!--<transition-group name="list" tag="ul">
+              <li v-for="(item,i) in selectFood" :key="i">
+                {{item.name}}
+                <div class="right-wrapper">
+                  <span class="currency">￥</span><span class="cart-price">{{item.price}}</span>
+                  <cart-control @updateFood="$emit('updateSelectFood',$event,i)"
+                                :food="item"
+                                :expand="true"></cart-control>
+                </div>
+              </li>
+            </transition-group>-->
             <ul>
               <li v-for="(item,i) in selectFood" :key="i">
                 {{item.name}}
@@ -74,6 +85,12 @@
       }
     },
     computed: {
+      showList () {
+        if (this.selectFood.length <= 0) {
+          this.visibleList = false
+        }
+        return this.visibleList && (this.selectFood.length > 0)
+      },
       payDesc () {
         let text
         if (this.totalPrice > this.minPrice) {
@@ -116,6 +133,7 @@
     },
     methods: {
       showCartList () {
+        console.log(this.showList)
         if (this.selectFood.length > 0) {
           this.visibleList = !this.visibleList
           this.$nextTick(() => {
@@ -224,6 +242,13 @@
       padding: 0 .36rem;
       max-height: 4.43rem;
       overflow: hidden;
+      .list-enter-active, .list-leave-active {
+        transition: all 20s;
+      }
+      .list-enter, .list-leave-to {
+        opacity: 0;
+        transform: translateX(30px);
+      }
       li {
         display: flex;
         align-items: center;
