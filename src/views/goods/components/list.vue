@@ -3,12 +3,13 @@
     <div class="goods-list-item-wrapper">
       <div class="goods-list-item"
            ref="listItem"
-           v-for="(item,i) in goodsData"
-           :key="i">
+           v-for="(item,index) in goodsData"
+           :key="index">
         <div class="list-title" ref="listTitle">{{item.name}}</div>
         <div class="list-content"
              v-for="(food, i) in item.foods"
              :key="i">
+          <!--{{food}}-->
           <div class="content-left">
             <img :src="food.icon">
           </div>
@@ -27,7 +28,8 @@
                   </span>
                   <span v-if="food.oldPrice" class="price-old">￥{{food.oldPrice}}</span>
                 </div>
-                <cart-control></cart-control>
+                <cart-control :food="food"
+                              @updateFood="updateFood($event,i,index)"></cart-control>
               </li>
             </ul>
           </div>
@@ -51,6 +53,9 @@
       },
     },
     components: {CartControl},
+    data () {
+      return {}
+    },
     mounted () {
       this.init()
     },
@@ -86,6 +91,9 @@
         const {oTitle, scroll} = this
         scroll.scrollToElement(oTitle[i], 200)
       },
+      updateFood (data, i, index) {
+        this.$emit('updateFood', data, i, index)
+      }
     }
   }
 </script>

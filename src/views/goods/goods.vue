@@ -9,10 +9,13 @@
       </goods-aside>
       <goods-list ref="goodsList"
                   v-if="goodsData.length"
-                  :goodsData="goodsData">
+                  :goodsData="goodsData"
+                  @updateFood="updateFood">
       </goods-list>
     </div>
-    <goods-cart></goods-cart>
+    <goods-cart @updateSelectFood="updateSelectFood"
+                :selectFood="selectFood">
+    </goods-cart>
   </div>
 </template>
 
@@ -26,6 +29,7 @@
     data () {
       return {
         goodsData: [],
+        selectFood: []
       }
     },
     components: {GoodsAside, GoodsList, GoodsCart},
@@ -34,7 +38,24 @@
         this.goodsData = res.goods
       })
     },
-    methods: {}
+    methods: {
+      updateFood (data, index1, index2) {
+        // this.goodsData[index2].foods[index1].count = data.count
+        this.$set(this.goodsData[index2].foods[index1], 'count', data.count)
+        //这里要用三等号，因为item.name === data.name这是条件语句，而不是赋值语句
+        const temp = this.selectFood.findIndex(item => item.name === data.name)
+        if (temp > -1) {
+          // 利用索引直接设置一个项时，vue不能在视图层检测到数组的变动
+          // this.selectFood[temp].count = data.count
+          this.$set(this.selectFood, temp, data)
+        } else {
+          this.selectFood.push(data)
+        }
+      },
+      updateSelectFood (data, index) {
+        this.$set(this.selectFood, index, data)
+      }
+    }
   }
 </script>
 

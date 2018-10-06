@@ -6,7 +6,7 @@
         <div class="left-button" @click="reduce">
           <base-icon icon="reduce"></base-icon>
         </div>
-        <div class="number">2</div>
+        <div class="number">{{food.count}}</div>
       </div>
     </transition>
     <div class="right-button" @click="plus">
@@ -22,18 +22,40 @@
       expand: {
         type: Boolean,
         default: false
+      },
+      food: {
+        type: Object,
+        default () {
+          return {
+            count: 0
+          }
+        }
       }
     },
     data () {
       return {
-        visible: this.expand
+        visible: this.expand,
+        copyFood: {}
       }
+    },
+    mounted () {
     },
     methods: {
       reduce () {
+        this.copyFood.count--
+        if (this.copyFood.count <= 0) {
+          this.visible = false
+        }
+        this.$emit('updateFood', this.copyFood)
       },
       plus () {
-        this.visible = !this.visible
+        this.copyFood = JSON.parse(JSON.stringify(this.food))
+        if (!this.copyFood.count) {
+          this.copyFood.count = 0
+        }
+        this.copyFood.count++
+        this.visible = true
+        this.$emit('updateFood', this.copyFood)
       }
     }
   }

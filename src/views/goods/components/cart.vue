@@ -4,32 +4,35 @@
          @click="showCartList">
       <div class="cart-icon">
         <div class="shop-cart-wrapper">
-          <div class="badge">
-            10
+          <div class="badge" v-show="totalCount>0">
+            {{totalCount}}
           </div>
           <base-icon class="shop-cart" icon="cart"></base-icon>
         </div>
         <span class="price">￥0</span>
       </div>
       <div class="deliver">
-        另需配送费￥4元
+        另需配送费￥{{deliveryPrice}}元
       </div>
       <div class="pay-money">
         ￥20起送
       </div>
     </div>
     <transition name="slide">
-      <div class="goods-cart-modal" v-show="visibleList">
+      <div class="goods-cart-modal" v-if="selectFood.length>0" v-show="visibleList">
         <div class="goods-list">
           <div class="goods-title">
             <span>购物车</span> <span class="clear">清空</span>
           </div>
           <div class="goods-content">
             <ul>
-              <li v-for="(item,i) in 20" :key="i">list1
+              <li v-for="(item,i) in selectFood" :key="i">
+                {{item.name}}
                 <div class="right-wrapper">
-                  <span class="currency">￥</span><span class="cart-price">10</span>
-                  <cart-control :expand="true"></cart-control>
+                  <span class="currency">￥</span><span class="cart-price">{{item.price}}</span>
+                  <cart-control @updateFood="$emit('updateSelectFood',$event,i)"
+                                :food="item"
+                                :expand="true"></cart-control>
                 </div>
               </li>
             </ul>
@@ -46,30 +49,49 @@
 
   export default {
     name: 'GoodsCart',
+    props: {
+      selectFood: {
+        type: Array,
+        required: true
+      },
+      deliveryPrice: {
+        type: Number,
+        default: 0
+      },
+      minPrice: {
+        type: Number,
+        default: 20
+      }
+    },
     components: {cartControl},
     data () {
       return {
         visibleList: false,
-        count: 0
+      }
+    },
+    computed: {
+      totalCount () {
+        let result = 0
+        // reduce不能操作空数组
+        if (this.selectFood.length) {
+          result = this.selectFood.reduce((count, item) => count + item.count, 0)
+        }
+        return result
       }
     },
     mounted () {
-      // setTimeout(() => {
-      //   console.log('1', document.querySelector('.goods-content'))
-      //   this.scroll = new BScroll('.goods-content', {click: true})
-      // }, 1000)
+
     },
     methods: {
       showCartList () {
-        this.visibleList = !this.visibleList
-        if (this.count === 0) {
+        if (this.selectFood.length > 0) {
+          this.visibleList = !this.visibleList
           this.$nextTick(() => {
             this.scroll = new BScroll('.goods-content', {
               click: true
             })
           })
         }
-        this.count++
       }
     }
   }
