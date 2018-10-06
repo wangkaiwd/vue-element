@@ -4,18 +4,22 @@
          @click="showCartList">
       <div class="cart-icon">
         <div class="shop-cart-wrapper">
-          <div class="badge" v-show="totalCount>0">
+          <div class="badge" :class="" v-show="totalCount>0">
             {{totalCount}}
           </div>
-          <base-icon class="shop-cart" icon="cart"></base-icon>
+          <base-icon :class="highlight"
+                     class="shop-cart"
+                     icon="cart">
+
+          </base-icon>
         </div>
-        <span class="price">￥0</span>
+        <span class="price" :class="highlight">￥{{totalPrice}}</span>
       </div>
       <div class="deliver">
         另需配送费￥{{deliveryPrice}}元
       </div>
-      <div class="pay-money">
-        ￥20起送
+      <div class="pay-money" :class="payEnough">
+        {{payDesc}}
       </div>
     </div>
     <transition name="slide">
@@ -70,12 +74,40 @@
       }
     },
     computed: {
+      payDesc () {
+        let text
+        if (this.totalPrice > this.minPrice) {
+          text = '去结算'
+        }
+        if (this.totalPrice < this.minPrice) {
+          text = `还差￥${this.minPrice - this.totalPrice}元起送`
+        }
+        if (this.totalPrice === 0) {
+          text = `￥${this.minPrice}起送`
+        }
+        return text
+      },
+      highlight () {
+        return {
+          highlight: this.totalCount > 0
+        }
+      },
+      payEnough () {
+        return {
+          'pay-enough': this.payDesc === '去结算'
+        }
+      },
       totalCount () {
         let result = 0
         // reduce不能操作空数组
         if (this.selectFood.length) {
           result = this.selectFood.reduce((count, item) => count + item.count, 0)
         }
+        return result
+      },
+      totalPrice () {
+        let result = 0
+        this.selectFood.map(item => result += item.price * item.count)
         return result
       }
     },
@@ -132,9 +164,12 @@
         position: relative;z-index: 2;display: flex;align-items: center;
         justify-content: center;width: 100%;height: 100%;border-radius: 50%;
         background-color: #2b343c;
+        &.highlight {color: #fff;background-color: #00a0dc;}
       }
     }
-    .price {margin-left: .24rem;font-weight: @font-weight-title;}
+    .price {margin-left: .24rem;font-weight: @font-weight-title;
+      &.highlight {color: #fff;}
+    }
     .deliver {
       position: relative;flex: 1;font-size: 12px;padding-left: .24rem;
       &::before {
@@ -144,8 +179,11 @@
       }
     }
     .pay-money {
-      width: 2.1rem;height: 100%;background-color: #2b333b;font-size: 14px;
+      width: 2.1rem;height: 100%;background-color: #2b333b;font-size: 12px;
       text-align: center;font-weight: @font-weight-title;
+      &.pay-enough {
+        background-color: #00b43c;color: #fff;
+      }
     }
     .goods-cart-modal {
       position: fixed;top: 0;left: 0;width: 100%;bottom: .96rem;

@@ -14,7 +14,9 @@
       </goods-list>
     </div>
     <goods-cart @updateSelectFood="updateSelectFood"
-                :selectFood="selectFood">
+                :selectFood="selectFood"
+                :deliveryPrice="seller.deliveryPrice"
+                :minPrice="seller.minPrice">
     </goods-cart>
   </div>
 </template>
@@ -53,12 +55,19 @@
         if (temp > -1) {
           // 利用索引直接设置一个项时，vue不能在视图层检测到数组的变动
           // this.selectFood[temp].count = data.count
+          if (data.count <= 0) {
+            this.selectFood.splice(temp, 1)
+          }
           this.$set(this.selectFood, temp, data)
         } else {
           this.selectFood.push(data)
         }
       },
       updateSelectFood (data, index) {
+        if (data.count <= 0) {
+          this.selectFood.splice(index, 1)
+          return
+        }
         this.$set(this.selectFood, index, data)
       }
     }

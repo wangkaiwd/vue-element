@@ -42,6 +42,7 @@
     },
     methods: {
       reduce () {
+        this.copyFood = JSON.parse(JSON.stringify(this.food))
         this.copyFood.count--
         if (this.copyFood.count <= 0) {
           this.visible = false
