@@ -11,6 +11,13 @@
     </transition>
     <div class="right-button" @click="plus">
       <base-icon icon="plus"></base-icon>
+      <transition @before-enter="beforeEnter"
+                  @enter="enter"
+                  @after-enter="afterEnter">
+        <div class="ball-container" v-show="visibleBall">
+          <div class="ball" ref="ball"></div>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -19,10 +26,6 @@
   export default {
     name: 'CartControl',
     props: {
-      // expand: {
-      //   type: Boolean,
-      //   default: false
-      // },
       food: {
         type: Object,
         default () {
@@ -30,11 +33,17 @@
             count: 0
           }
         }
+      },
+      position: {
+        type: Object,
+        required: false
       }
     },
     data () {
       return {
-        copyFood: {}
+        copyFood: {},
+        visibleBall: false,
+        oBall: {}
       }
     },
     computed: {
@@ -43,6 +52,7 @@
       }
     },
     mounted () {
+      this.oBall = this.$refs.ball
     },
     methods: {
       reduce () {
@@ -51,12 +61,29 @@
         this.$emit('updateFood', this.copyFood)
       },
       plus () {
+        this.visibleBall = true
         this.copyFood = JSON.parse(JSON.stringify(this.food))
         if (!this.copyFood.count) {
           this.copyFood.count = 0
         }
         this.copyFood.count++
         this.$emit('updateFood', this.copyFood)
+      },
+      beforeEnter (el) {
+        el.style.transform = `translate(0)`
+      },
+      enter (el) {
+        const rect = el.getBoundingClientRect()
+        const x = rect.x - this.position.x + rect.width / 2
+        const y = this.position.y - rect.y - rect.height / 2
+        el.style.transform = `translate(-${x}px)`
+        this.oBall.style.transform = `translate(0,${y}px)`
+      },
+      afterEnter (el) {
+        el.style.transform = `translate(0)`
+        this.oBall.style.transform = `translate(0,0px)`
+        el.style.display = 'none'
+        this.visibleBall = false
       }
     }
   }
@@ -68,7 +95,6 @@
   .cart-control {
     display: flex;
     align-items: center;
-    overflow: hidden;
     .left-wrapper {display: flex;align-items: center;}
     .right-button,
     .left-button {
@@ -76,6 +102,23 @@
       border-radius: 50%;
       color: @blue;
       transition: all .4s;
+    }
+    .right-button {position: relative;}
+    .ball-container {
+      position: absolute;
+      z-index: 4;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 100%;
+      transition: all .4s linear;
+    }
+    .ball {
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+      background-color: #00a0dc;
+      transition: all .4s cubic-bezier(.2, -0.17, .41, -0.16);
     }
     .number {
       width: .48rem;

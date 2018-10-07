@@ -3,12 +3,13 @@
     <div class="goods-cart-container"
          @click="showCartList">
       <div class="cart-icon">
-        <div class="shop-cart-wrapper">
+        <div class="shop-cart-wrapper" id="shop-cart-wrapper">
           <div class="badge" :class="" v-show="totalCount>0">
             {{totalCount}}
           </div>
           <base-icon :class="highlight"
                      class="shop-cart"
+                     id="shop-cart"
                      icon="cart">
 
           </base-icon>
@@ -47,6 +48,7 @@
                   <span class="currency">￥</span><span class="cart-price">{{item.price}}</span>
                   <cart-control @updateFood="$emit('updateSelectFood',$event,i)"
                                 :food="item"
+                                :position="position"
                                 :expand="true"></cart-control>
                 </div>
               </li>
@@ -76,6 +78,10 @@
       minPrice: {
         type: Number,
         default: 20
+      },
+      position: {
+        type: Object,
+        required: false
       }
     },
     components: {cartControl},
@@ -129,11 +135,9 @@
       }
     },
     mounted () {
-
     },
     methods: {
       showCartList () {
-        console.log(this.showList)
         if (this.selectFood.length > 0) {
           this.visibleList = !this.visibleList
           this.$nextTick(() => {
@@ -152,6 +156,8 @@
   @import '~styles/mixins';
 
   .goods-cart {
+    position: relative;
+    z-index: 4;
     width: 100%;
     .goods-cart-container {
       display: flex;height: .96rem;line-height: .96rem;background-color: #141d27;

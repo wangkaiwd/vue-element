@@ -29,6 +29,7 @@
                   <span v-if="food.oldPrice" class="price-old">￥{{food.oldPrice}}</span>
                 </div>
                 <cart-control :food="food"
+                              :position="position"
                               @updateFood="updateFood($event,i,index)"></cart-control>
               </li>
             </ul>
@@ -51,6 +52,10 @@
         type: Array,
         required: true
       },
+      position: {
+        type: Object,
+        required: false
+      }
     },
     components: {CartControl},
     data () {
@@ -104,7 +109,7 @@
 
   .goods-list {
     flex: 1;
-    overflow: hidden;
+    /*overflow: hidden;*/
     .list-title {
       padding-left: .28rem;
       border-left: 2px solid @border-color;

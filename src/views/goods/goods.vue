@@ -5,17 +5,20 @@
         不过在这里可以练习组件传参
       -->
       <goods-aside @scrollToEl="$refs.goodsList.scrollTop($event)"
+                   v-if="goodsData.length"
                    :goodsData="goodsData">
       </goods-aside>
       <goods-list ref="goodsList"
                   v-if="goodsData.length"
                   :goodsData="goodsData"
+                  :position="cartPosition"
                   @updateFood="updateFood">
       </goods-list>
     </div>
     <goods-cart @updateSelectFood="updateSelectFood"
                 :selectFood="selectFood"
                 :deliveryPrice="seller.deliveryPrice"
+                :position="cartPosition"
                 :minPrice="seller.minPrice">
     </goods-cart>
   </div>
@@ -37,7 +40,8 @@
     data () {
       return {
         goodsData: [],
-        selectFood: []
+        selectFood: [],
+        cartPosition: {}
       }
     },
     components: {GoodsAside, GoodsList, GoodsCart},
@@ -45,8 +49,17 @@
       this.$api.element.fetchGoods({}, res => {
         this.goodsData = res.goods
       })
+      this.getPosition()
     },
     methods: {
+      getPosition () {
+        setTimeout(() => {
+          const rect = document.querySelector('#shop-cart-wrapper').getBoundingClientRect()
+          this.cartPosition.x = rect.x + rect.width / 2
+          this.cartPosition.y = rect.y
+          this.cartPosition.height = rect.height
+        }, 300)
+      },
       updateFood (data, secondLevelIndex, firstLevelIndex) {
         // this.goodsData[firstLevelIndex].foods[secondLevelIndex].count = data.count
         data.firstLevelIndex = firstLevelIndex
@@ -85,6 +98,7 @@
     display: flex;
     height: 100%;
     flex-direction: column;
+    overflow: hidden;
     .goods-wrapper {
       display: flex;
       flex: 1;

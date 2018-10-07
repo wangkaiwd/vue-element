@@ -66,7 +66,7 @@
   .wrapper {
     width: 1.6rem;
     background-color: #f3f5f7;
-    overflow: hidden;
+    /*overflow: hidden;*/
     .content {min-height: 100%;}
     .item {
       padding: 0 .24rem;
