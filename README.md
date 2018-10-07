@@ -125,6 +125,18 @@ p {
 效果图展示： 
 ![margin-fixed](./screenshot/margin-fixed.jpg)
 
+### 3. 减少使用`overflow:hidden`属性
+在项目中应尽可能避免使用`overflow:hidden;`来实现某些布局（清除浮动等），否则
+会可能导致某些子元素在关键位置无法显示
+
+如果有某个元素需要在设置`overflow:hidden`的父元素外面显示，可以通过定位来实现。
+只要子元素用来确定偏移量的元素不是该父元素即可 
+* 父元素非定位元素，子元素设置:`position: fixed/absolute;`
+* 父元素为定位元素，子元素设置：`position: fixed`;
+
+总之，`overflow:hidden`只能限制住相对于它自己的元素的显示和隐藏
+
+
 ## `Vue`知识
 ### 1. 访问子组件实例或子元素
 有时候我们需要在`JavaScript`里直接访问一个子组件。使得能父组件直接修改子组件
