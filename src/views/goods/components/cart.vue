@@ -27,7 +27,7 @@
       <div class="goods-cart-modal" v-show="showList">
         <div class="goods-list">
           <div class="goods-title">
-            <span>购物车</span> <span class="clear">清空</span>
+            <span>购物车</span> <span class="clear" @click="$emit('clearFood')">清空</span>
           </div>
           <div class="goods-content">
             <!--<transition-group name="list" tag="ul">
@@ -61,6 +61,12 @@
 </template>
 
 <script>
+  // 待优化点：
+  // fixme
+  //  1. 在添加购物车时进行滑动，小球会无法进入购物车，因为商品和购物车的距离发生了变化
+  //  2. 在快速点击添加购物车的时候，不会有小球出现，因为此时小球的动画还未执行完毕
+  //  3. 在删除购物车商品的时候，可以添加过渡动画，尝试之后出现了一些莫名其妙的问题
+
   import cartControl from '@/components/cartControl'
   import BScroll from 'better-scroll'
 

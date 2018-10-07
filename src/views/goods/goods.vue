@@ -19,7 +19,8 @@
                 :selectFood="selectFood"
                 :deliveryPrice="seller.deliveryPrice"
                 :position="cartPosition"
-                :minPrice="seller.minPrice">
+                :minPrice="seller.minPrice"
+                @clearFood="clearFood">
     </goods-cart>
   </div>
 </template>
@@ -39,6 +40,7 @@
     },
     data () {
       return {
+        originData: [],
         goodsData: [],
         selectFood: [],
         cartPosition: {}
@@ -48,6 +50,7 @@
     mounted () {
       this.$api.element.fetchGoods({}, res => {
         this.goodsData = res.goods
+        this.originData = JSON.parse(JSON.stringify(res.goods))
       })
       this.getPosition()
     },
@@ -88,6 +91,10 @@
           return
         }
         this.$set(this.selectFood, index, data)
+      },
+      clearFood () {
+        this.selectFood = []
+        this.goodsData = JSON.parse(JSON.stringify(this.originData))
       }
     }
   }
