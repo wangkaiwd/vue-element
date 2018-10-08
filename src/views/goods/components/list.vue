@@ -11,7 +11,7 @@
              :key="i">
           <!--{{food}}-->
           <div class="content-left">
-            <img :src="food.icon">
+            <img :src="food.icon" @click="showDetail(food)">
           </div>
           <div class="content-right">
             <ul>
@@ -37,6 +37,10 @@
         </div>
       </div>
     </div>
+    <goods-detail v-if="visibleDetail"
+                  :goodsDetail="goodsDetail"
+                  :position="position">
+    </goods-detail>
   </div>
 </template>
 
@@ -44,6 +48,7 @@
   import BScroll from 'better-scroll'
   import { mapMutations, mapState } from 'vuex'
   import CartControl from '@/components/cartControl'
+  import GoodsDetail from './detail'
 
   export default {
     name: 'GoodsList',
@@ -57,9 +62,12 @@
         required: false
       }
     },
-    components: {CartControl},
+    components: {CartControl, GoodsDetail},
     data () {
-      return {}
+      return {
+        goodsDetail: {},
+        visibleDetail: false
+      }
     },
     mounted () {
       this.init()
@@ -98,6 +106,10 @@
       },
       updateFood (data, i, index) {
         this.$emit('updateFood', data, i, index)
+      },
+      showDetail (item) {
+        this.goodsDetail = item
+        this.visibleDetail = true
       }
     }
   }

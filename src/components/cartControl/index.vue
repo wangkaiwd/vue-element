@@ -11,7 +11,8 @@
     </transition>
     <div class="right-button" @click="plus">
       <base-icon icon="plus"></base-icon>
-      <transition @before-enter="beforeEnter"
+      <transition v-if="position"
+                  @before-enter="beforeEnter"
                   @enter="enter"
                   @after-enter="afterEnter">
         <div class="ball-container" v-show="visibleBall">
@@ -29,9 +30,7 @@
       food: {
         type: Object,
         default () {
-          return {
-            count: 0
-          }
+          return {count: 0}
         }
       },
       position: {
