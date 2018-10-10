@@ -11,7 +11,7 @@
              :key="i">
           <!--{{food}}-->
           <div class="content-left">
-            <img :src="food.icon" @click="showDetail(food)">
+            <img :src="food.icon" @click="showDetail(food,i,index)">
           </div>
           <div class="content-right">
             <ul>
@@ -30,7 +30,8 @@
                 </div>
                 <cart-control :food="food"
                               :position="position"
-                              @updateFood="updateFood($event,i,index)"></cart-control>
+                              @updateFood="updateFood($event,i,index)">
+                </cart-control>
               </li>
             </ul>
           </div>
@@ -39,7 +40,8 @@
     </div>
     <goods-detail v-if="visibleDetail"
                   :goodsDetail="goodsDetail"
-                  :position="position">
+                  :position="position"
+                  @updateFood="$emit('updateFood',$event,secondLevelIndex,firstLevelIndex)">
     </goods-detail>
   </div>
 </template>
@@ -66,7 +68,9 @@
     data () {
       return {
         goodsDetail: {},
-        visibleDetail: false
+        visibleDetail: false,
+        firstLevelIndex: 0,
+        secondLevelIndex: 0
       }
     },
     mounted () {
@@ -107,7 +111,9 @@
       updateFood (data, i, index) {
         this.$emit('updateFood', data, i, index)
       },
-      showDetail (item) {
+      showDetail (item, i, index) {
+        this.firstLevelIndex = index
+        this.secondLevelIndex = i
         this.goodsDetail = item
         this.visibleDetail = true
       }

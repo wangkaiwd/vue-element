@@ -13,7 +13,9 @@
         </div>
         <div class="price-wrapper">
           <div class="price">￥{{goodsDetail.price}}</div>
-          <cart-control :food="goodsDetail">
+          <cart-control :food="goodsDetail"
+                        :position="position"
+                        @updateFood="$emit('updateFood',$event)">
           </cart-control>
         </div>
       </div>
@@ -49,7 +51,7 @@
     right: 0;
     top: 0;
     bottom: .96rem;
-    background-color: red;
+    background-color: pink;
     .img-wrapper {position: relative;}
     .img-icon {
       position: absolute;
@@ -65,6 +67,7 @@
     }
     .price-wrapper {
       display: flex;
+      justify-content: space-between;
     }
   }
 </style>
