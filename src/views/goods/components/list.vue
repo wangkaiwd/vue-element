@@ -39,9 +39,10 @@
       </div>
     </div>
     <goods-detail v-if="visibleDetail"
+                  :visibleDetail.sync="visibleDetail"
                   :goodsDetail="goodsDetail"
                   :position="position"
-                  @updateFood="$emit('updateFood',$event,secondLevelIndex,firstLevelIndex)">
+                  @updateFood="updateDetailFood">
     </goods-detail>
   </div>
 </template>
@@ -116,6 +117,10 @@
         this.secondLevelIndex = i
         this.goodsDetail = item
         this.visibleDetail = true
+      },
+      updateDetailFood (data, secondLevelIndex, firstLevelIndex) {
+        this.goodsDetail = data
+        this.$emit('updateFood', data, this.secondLevelIndex, this.firstLevelIndex)
       }
     }
   }

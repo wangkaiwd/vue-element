@@ -7,14 +7,26 @@
 }
 
 // 移动端1像素处理
-.border-1px (@color) {
+.border-1px (@color,@position:top) {
   position: relative;
   &:after {
     content: '';
     position: absolute;
     left: 0;
-    bottom: 0;
+      @{position}: 0;
     width: 100%;
+    border-@{position}: 1px solid @color;
+  }
+}
+
+.border-1px-lr(@color,@position:left) {
+  position: relative;
+  &:after {
+    content: '';
+    position: absolute;
+      @{position}: 0;
+    top: 0;
+    height: 100%;
     border-top: 1px solid @color;
   }
 }
