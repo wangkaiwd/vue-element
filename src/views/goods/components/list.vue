@@ -52,6 +52,7 @@
   import { mapMutations, mapState } from 'vuex'
   import CartControl from '@/components/cartControl'
   import GoodsDetail from './detail'
+  import { toggleForbidScrollThrough } from '@/utils/compatible'
 
   export default {
     name: 'GoodsList',
@@ -117,8 +118,9 @@
         this.secondLevelIndex = i
         this.goodsDetail = item
         this.visibleDetail = true
+        toggleForbidScrollThrough(true)
       },
-      updateDetailFood (data, secondLevelIndex, firstLevelIndex) {
+      updateDetailFood (data) {
         this.goodsDetail = data
         this.$emit('updateFood', data, this.secondLevelIndex, this.firstLevelIndex)
       }

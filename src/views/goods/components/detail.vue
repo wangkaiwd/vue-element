@@ -2,7 +2,7 @@
   <div class="goods-detail">
     <div class="goods-banner border-1px">
       <div class="img-wrapper">
-        <base-icon @click="$emit('update:visibleDetail')" class="img-icon" icon="left"></base-icon>
+        <base-icon @click="closeDetail" class="img-icon" icon="left"></base-icon>
         <img :src="goodsDetail.image" alt="">
       </div>
       <div class="detail-wrapper">
@@ -37,6 +37,7 @@
 
 <script>
   import CartControl from '@/components/cartControl'
+  import { toggleForbidScrollThrough } from '@/utils/compatible'
 
   export default {
     name: 'GoodsDetail',
@@ -49,6 +50,12 @@
       position: {
         type: Object,
         required: false
+      }
+    },
+    methods: {
+      closeDetail () {
+        this.$emit('update:visibleDetail', false)
+        toggleForbidScrollThrough(false)
       }
     }
   }
