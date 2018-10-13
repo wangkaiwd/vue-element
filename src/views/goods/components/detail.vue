@@ -2,8 +2,8 @@
   <div class="goods-detail">
     <div class="goods-banner border-1px">
       <div class="img-wrapper">
-        <base-icon @click="closeDetail" class="img-icon" icon="left"></base-icon>
         <img :src="goodsDetail.image" alt="">
+        <base-icon @click="closeDetail" class="img-icon" icon="left"></base-icon>
       </div>
       <div class="detail-wrapper">
         <div class="name">{{goodsDetail.name}}</div>
@@ -73,7 +73,20 @@
     bottom: .96rem;
     background-color: #fff;
     overflow: scroll;
-    .img-wrapper {position: relative;}
+    .img-wrapper {
+      position: relative;
+      width: 100%;
+      height: 0;
+      /*保证图片宽高在屏幕宽高变化的情况下进行等比缩放，并在图片加载的过程中占位，保证页面不会变形*/
+      padding-top: 100%;
+      img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
     .img-icon {
       position: absolute;
       top: .1rem;
