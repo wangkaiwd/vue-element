@@ -1,4 +1,6 @@
 //全局css样式
+@import './varibale';
+
 @media (-webkit-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5) {
   .border-1px {
     &:after {transform: scaleY(.7);}
@@ -9,5 +11,12 @@
   .border-1px {
     &:after {transform: scaleY(.5);}
   }
+}
+
+.split {
+  height: .32rem;
+  border-top: 1px solid @border-color;
+  border-bottom: 1px solid @border-color;
+  background-color: #f3f5f7;
 }
 

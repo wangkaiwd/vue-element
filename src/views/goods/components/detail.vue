@@ -168,12 +168,6 @@
       }
     }
     .goods-comment {padding: .36rem;}
-    .split {
-      height: .32rem;
-      border-top: 1px solid @border-color;
-      border-bottom: 1px solid @border-color;
-      background-color: #f3f5f7;
-    }
     .join-cart {
       position: relative;
       width: 1.48rem;
