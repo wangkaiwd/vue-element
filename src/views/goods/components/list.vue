@@ -38,12 +38,14 @@
         </div>
       </div>
     </div>
-    <goods-detail v-if="visibleDetail"
-                  :visibleDetail.sync="visibleDetail"
-                  :goodsDetail="goodsDetail"
-                  :position="position"
-                  @updateFood="updateDetailFood">
-    </goods-detail>
+    <transition name="slide">
+      <goods-detail v-if="visibleDetail"
+                    :visibleDetail.sync="visibleDetail"
+                    :goodsDetail="goodsDetail"
+                    :position="position"
+                    @updateFood="updateDetailFood">
+      </goods-detail>
+    </transition>
   </div>
 </template>
 
@@ -185,5 +187,12 @@
       justify-content: space-between;
     }
     .price-old {text-decoration: line-through;}
+    .slide-enter,
+    .slide-leave-to {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    .slide-enter-active,
+    .slide-leave-active {transition: all 1s;}
   }
 </style>

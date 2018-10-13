@@ -1,36 +1,45 @@
 <template>
   <div class="goods-detail">
-    <div class="goods-banner border-1px">
-      <div class="img-wrapper">
-        <img :src="goodsDetail.image" alt="">
-        <base-icon @click="closeDetail" class="img-icon" icon="left"></base-icon>
-      </div>
-      <div class="detail-wrapper">
-        <div class="name">{{goodsDetail.name}}</div>
-        <div class="text-wrapper">
-          <span class="sell-count">月售{{goodsDetail.sellCount}}份</span>
-          <span class="rating">好评率{{goodsDetail.rating}}%</span>
+    <div class="goods-detail-wrapper">
+      <div class="goods-banner border-1px">
+        <div class="img-wrapper">
+          <img :src="goodsDetail.image" alt="">
+          <base-icon @click="closeDetail" class="img-icon" icon="left"></base-icon>
         </div>
-        <div class="price-wrapper">
-          <div class="price">
-            <span class="currency">￥</span><span class="present-price">{{goodsDetail.price}}</span>
-            <span class="old-price" v-if="goodsDetail.oldPrice">￥{{goodsDetail.oldPrice}}</span>
+        <div class="detail-wrapper">
+          <div class="name">{{goodsDetail.name}}</div>
+          <div class="text-wrapper">
+            <span class="sell-count">月售{{goodsDetail.sellCount}}份</span>
+            <span class="rating">好评率{{goodsDetail.rating}}%</span>
           </div>
-          <cart-control :food="goodsDetail"
-                        :position="position"
-                        @updateFood="$emit('updateFood',$event)">
-          </cart-control>
+          <div class="price-wrapper">
+            <div class="price">
+              <span class="currency">￥</span><span class="present-price">{{goodsDetail.price}}</span>
+              <span class="old-price" v-if="goodsDetail.oldPrice">￥{{goodsDetail.oldPrice}}</span>
+            </div>
+            <div class="join-cart">
+              <cart-control class="operation"
+                            ref="cartControl"
+                            :food="goodsDetail"
+                            :position="position"
+                            @updateFood="$emit('updateFood',$event)">
+              </cart-control>
+              <div class="join" v-if="visibleJoinButton" @click="handleJoinClick">
+                加入购物车
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="split"></div>
-    <div class="goods-info">
-      <h3>商品评价</h3>
-      <p>{{goodsDetail.info}}</p>
-    </div>
-    <div class="split"></div>
-    <div class="goods-comment">
-      <h3>商品评论</h3>
+      <div class="split"></div>
+      <div class="goods-info">
+        <h3>商品评价</h3>
+        <p>{{goodsDetail.info}}</p>
+      </div>
+      <div class="split"></div>
+      <div class="goods-comment">
+        <h3>商品评论</h3>
+      </div>
     </div>
   </div>
 </template>
@@ -38,6 +47,7 @@
 <script>
   import CartControl from '@/components/cartControl'
   import { toggleForbidScrollThrough } from '@/utils/compatible'
+  import BScroll from 'better-scroll'
 
   export default {
     name: 'GoodsDetail',
@@ -52,10 +62,29 @@
         required: false
       }
     },
+    data () {
+      return {}
+    },
+    computed: {
+      visibleJoinButton () {
+        return !(this.goodsDetail.count > 0)
+      }
+    },
+    mounted () {
+      this.initScroll()
+    },
     methods: {
       closeDetail () {
         this.$emit('update:visibleDetail', false)
         toggleForbidScrollThrough(false)
+      },
+      initScroll () {
+        this.scroll = new BScroll('.goods-detail', {
+          click: true
+        })
+      },
+      handleJoinClick () {
+        this.$refs.cartControl.plus()
       }
     }
   }
@@ -66,13 +95,15 @@
   @import "~styles/mixins";
 
   .goods-detail {
+    /*overflow: scroll;*/
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
     bottom: .96rem;
-    background-color: #fff;
-    overflow: scroll;
+    .goods-detail-wrapper {
+      background-color: #fff;
+    }
     .img-wrapper {
       position: relative;
       width: 100%;
@@ -142,6 +173,28 @@
       border-top: 1px solid @border-color;
       border-bottom: 1px solid @border-color;
       background-color: #f3f5f7;
+    }
+    .join-cart {
+      position: relative;
+      width: 1.48rem;
+      height: .48rem;
+      .join,
+      .operation {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+      .join {
+        width: 1.48rem;
+        height: .48rem;
+        border-radius: .24rem;
+        background-color: rgb(0, 160, 220);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        color: #fff;
+      }
     }
   }
 </style>
