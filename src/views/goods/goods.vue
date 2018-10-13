@@ -85,6 +85,7 @@
       updateSelectFood (data, index) {
         // 正常情况下，列表中的每一个项都要有一个唯一标识的id来进行匹配
         this.$set(this.goodsData[data.firstLevelIndex].foods, data.secondLevelIndex, data)
+        this.$set(this.$refs.goodsList.goodsDetail, 'count', data.count)
         if (data.count <= 0) {
           const temp = this.selectFood.findIndex(item => item.name === data.name)
           this.selectFood.splice(temp, 1)
@@ -95,6 +96,7 @@
       clearFood () {
         this.selectFood = []
         this.goodsData = JSON.parse(JSON.stringify(this.originData))
+        this.$refs.goodsList.goodsDetail.count = 0
       }
     }
   }

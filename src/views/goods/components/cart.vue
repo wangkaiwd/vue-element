@@ -19,7 +19,7 @@
       <div class="deliver">
         另需配送费￥{{deliveryPrice}}元
       </div>
-      <div class="pay-money" :class="payEnough">
+      <div class="pay-money" @click="payMoney" :class="payEnough">
         {{payDesc}}
       </div>
     </div>
@@ -105,7 +105,7 @@
       },
       payDesc () {
         let text
-        if (this.totalPrice > this.minPrice) {
+        if (this.totalPrice >= this.minPrice) {
           text = '去结算'
         }
         if (this.totalPrice < this.minPrice) {
@@ -151,6 +151,12 @@
               click: true
             })
           })
+        }
+      },
+      payMoney () {
+        if (this.payDesc === '去结算') {
+          alert(`一共消费${this.totalPrice}元`)
+          this.$emit('clearFood')
         }
       }
     }

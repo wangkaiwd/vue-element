@@ -31,8 +31,8 @@
           </div>
         </div>
       </div>
-      <div class="split"></div>
-      <div class="goods-info">
+      <div class="split" v-if="goodsDetail.info"></div>
+      <div class="goods-info" v-if="goodsDetail.info">
         <h3>商品评价</h3>
         <p>{{goodsDetail.info}}</p>
       </div>
