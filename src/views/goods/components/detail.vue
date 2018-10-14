@@ -1,6 +1,6 @@
 <template>
   <div class="goods-detail">
-    <div class="goods-detail-wrapper">
+    <div class="goods-detail-wrapper" @click.stop @touchMove.stop>
       <div class="goods-banner border-1px">
         <div class="img-wrapper">
           <img :src="goodsDetail.image" alt="">
@@ -37,21 +37,22 @@
         <p>{{goodsDetail.info}}</p>
       </div>
       <div class="split"></div>
-      <div class="goods-comment">
-        <h3>商品评论</h3>
-      </div>
+      <goods-comments :tagConfig="tagConfig"
+                      :ratings="goodsDetail.ratings">
+      </goods-comments>
     </div>
   </div>
 </template>
 
 <script>
   import CartControl from '@/components/cartControl'
+  import GoodsComments from '@/components/comments'
   import { toggleForbidScrollThrough } from '@/utils/compatible'
   import BScroll from 'better-scroll'
 
   export default {
     name: 'GoodsDetail',
-    components: {CartControl},
+    components: {CartControl, GoodsComments},
     props: {
       goodsDetail: {
         type: Object,
@@ -63,7 +64,13 @@
       }
     },
     data () {
-      return {}
+      return {
+        tagConfig: [
+          {text: '全部', number: 1},
+          {text: '推荐', number: 2},
+          {text: '吐槽', number: 3}
+        ]
+      }
     },
     computed: {
       visibleJoinButton () {
@@ -167,7 +174,7 @@
         font-size: 12px;
       }
     }
-    .goods-comment {padding: .36rem;}
+
     .join-cart {
       position: relative;
       width: 1.48rem;
