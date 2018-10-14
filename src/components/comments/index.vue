@@ -22,23 +22,6 @@
         只看有内容的评价
       </div>
     </div>
-    <div class="ratings-wrapper">
-      <ul class="ratings">
-        <li v-for="rating in ratings">
-          <p class="desc">
-            <span class="date">{{rating.rateTime}}</span>
-            <span class="user">
-              {{rating.username}}
-              <img :src="rating.avatar" alt="">
-            </span>
-          </p>
-          <p class="text">
-            <base-icon class="thumb-up" icon="thumb-up"></base-icon>
-            {{rating.text}}
-          </p>
-        </li>
-      </ul>
-    </div>
   </div>
 </template>
 
@@ -50,10 +33,6 @@
         type: Array,
         required: true
       },
-      ratings: {
-        type: Array,
-        required: true
-      }
     },
     data () {
       return {
@@ -101,31 +80,6 @@
       padding: .24rem .36rem;
       font-size: 12px;
       color: rgb(147, 153, 159);
-    }
-    .ratings-wrapper {
-      padding: 0 .36rem;
-      li {
-        padding: .32rem 0;
-        border-bottom: 1px solid @border-color;
-      }
-      .desc {
-        display: flex;
-        justify-content: space-between;
-        font-size: 10px;
-        color: rgb(147, 153, 159);
-        img {
-          margin-left: .12rem;
-          width: .24rem;
-          height: .24rem;
-        }
-      }
-      .text {
-        margin-top: .12rem;
-        font-size: 12px;
-        color: rgb(7, 17, 27);
-      }
-      .thumb-up {color: rgb(0, 160, 220);}
-      .thumb-down {color: rgb(147, 153, 159);}
     }
   }
 </style>
