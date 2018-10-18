@@ -1,6 +1,6 @@
 <template>
   <div class="goods-detail">
-    <div class="goods-detail-wrapper" @click.stop @touchMove.stop>
+    <div class="goods-detail-wrapper">
       <div class="goods-banner border-1px">
         <div class="img-wrapper">
           <img :src="goodsDetail.image" alt="">
@@ -41,7 +41,7 @@
       </goods-comments>
       <div class="ratings-wrapper">
         <ul class="ratings">
-          <li v-for="rating in goodsDetail.ratings">
+          <li v-for="(rating,i) in goodsDetail.ratings" :key="i">
             <p class="desc">
               <span class="date">{{rating.rateTime | formatTime}}</span>
               <span class="user">

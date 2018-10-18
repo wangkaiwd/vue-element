@@ -12,10 +12,12 @@
     <div class="right-button" @click="plus">
       <base-icon icon="plus"></base-icon>
       <transition v-if="position"
+                  v-for="(ball,i) in balls"
+                  :key="i"
                   @before-enter="beforeEnter"
                   @enter="enter"
                   @after-enter="afterEnter">
-        <div class="ball-container" v-show="visibleBall">
+        <div class="ball-container" v-show="ball.show">
           <div class="ball" ref="ball"></div>
         </div>
       </transition>
@@ -42,7 +44,9 @@
       return {
         copyFood: {},
         visibleBall: false,
-        oBall: {}
+        oBall: {},
+        balls: [{show: false}, {show: false}, {show: false}, {show: false}, {show: false}],
+        dropIndex: 0
       }
     },
     computed: {
@@ -60,7 +64,13 @@
         this.$emit('updateFood', this.copyFood)
       },
       plus () {
-        this.visibleBall = true
+        for (let i = 0; i < this.balls.length; i++) {
+          if (!this.balls[i].show) {
+            this.balls[i].show = true
+            this.dropIndex = i
+            break
+          }
+        }
         this.copyFood = JSON.parse(JSON.stringify(this.food))
         if (!this.copyFood.count) {
           this.copyFood.count = 0
@@ -76,13 +86,17 @@
         const x = rect.x - this.position.x + rect.width / 2
         const y = this.position.y - rect.y - rect.height / 2
         el.style.transform = `translate(-${x}px)`
-        this.oBall.style.transform = `translate(0,${y}px)`
+        this.oBall[this.dropIndex].style.transform = `translate(0,${y}px)`
       },
       afterEnter (el) {
         el.style.transform = `translate(0)`
-        this.oBall.style.transform = `translate(0,0px)`
+        this.oBall[this.dropIndex].style.transform = `translate(0,0px)`
         el.style.display = 'none'
-        this.visibleBall = false
+        for (let i = 0; i < this.balls.length; i++) {
+          if (this.balls[i].show) {
+            this.balls[i].show = false
+          }
+        }
       }
     }
   }
