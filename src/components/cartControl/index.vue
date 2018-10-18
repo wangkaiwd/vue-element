@@ -67,7 +67,6 @@
         for (let i = 0; i < this.balls.length; i++) {
           if (!this.balls[i].show) {
             this.balls[i].show = true
-            this.dropIndex = i
             break
           }
         }
@@ -86,11 +85,13 @@
         const x = rect.x - this.position.x + rect.width / 2
         const y = this.position.y - rect.y - rect.height / 2
         el.style.transform = `translate(-${x}px)`
-        this.oBall[this.dropIndex].style.transform = `translate(0,${y}px)`
+        const oBall = el.querySelector('.ball')
+        oBall.style.transform = `translate(0,${y}px)`
       },
       afterEnter (el) {
         el.style.transform = `translate(0)`
-        this.oBall[this.dropIndex].style.transform = `translate(0,0px)`
+        const oBall = el.querySelector('.ball')
+        oBall.style.transform = `translate(0,0px)`
         el.style.display = 'none'
         for (let i = 0; i < this.balls.length; i++) {
           if (this.balls[i].show) {
