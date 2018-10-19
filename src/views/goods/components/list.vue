@@ -38,14 +38,6 @@
         </div>
       </div>
     </div>
-    <transition name="slide">
-      <goods-detail v-if="visibleDetail"
-                    :visibleDetail.sync="visibleDetail"
-                    :goodsDetail="goodsDetail"
-                    :position="position"
-                    @updateFood="updateDetailFood">
-      </goods-detail>
-    </transition>
   </div>
 </template>
 
@@ -53,8 +45,6 @@
   import BScroll from 'better-scroll'
   import { mapMutations, mapState } from 'vuex'
   import CartControl from '@/components/cartControl'
-  import GoodsDetail from './detail'
-  import { toggleForbidScrollThrough } from '@/utils/compatible'
 
   export default {
     name: 'GoodsList',
@@ -68,11 +58,9 @@
         required: false
       }
     },
-    components: {CartControl, GoodsDetail},
+    components: {CartControl},
     data () {
       return {
-        goodsDetail: {},
-        visibleDetail: false,
         firstLevelIndex: 0,
         secondLevelIndex: 0
       }
@@ -118,14 +106,8 @@
       showDetail (item, i, index) {
         this.firstLevelIndex = index
         this.secondLevelIndex = i
-        this.goodsDetail = item
-        this.visibleDetail = true
-        toggleForbidScrollThrough(true)
+        this.$emit('updateDetail', item, true, this)
       },
-      updateDetailFood (data) {
-        this.goodsDetail = data
-        this.$emit('updateFood', data, this.secondLevelIndex, this.firstLevelIndex)
-      }
     }
   }
 </script>
@@ -187,12 +169,5 @@
       justify-content: space-between;
     }
     .price-old {text-decoration: line-through;}
-    .slide-enter,
-    .slide-leave-to {
-      opacity: 0;
-      transform: translateX(100%);
-    }
-    .slide-enter-active,
-    .slide-leave-active {transition: all 1s;}
   }
 </style>

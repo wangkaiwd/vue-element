@@ -12,9 +12,18 @@
                   v-if="goodsData.length"
                   :goodsData="goodsData"
                   :position="cartPosition"
+                  @updateDetail="updateDetail"
                   @updateFood="updateFood">
       </goods-list>
     </div>
+    <transition name="slide">
+      <goods-detail v-if="visibleDetail"
+                    :visibleDetail.sync="visibleDetail"
+                    :goodsDetail="goodsDetail"
+                    :position="cartPosition"
+                    @updateFood="updateDetailFood">
+      </goods-detail>
+    </transition>
     <goods-cart @updateSelectFood="updateSelectFood"
                 :selectFood="selectFood"
                 :deliveryPrice="seller.deliveryPrice"
@@ -29,6 +38,7 @@
   import GoodsAside from './components/aside'
   import GoodsList from './components/list'
   import GoodsCart from './components/cart'
+  import GoodsDetail from './components/detail'
 
   export default {
     name: 'goods',
@@ -43,10 +53,12 @@
         originData: [],
         goodsData: [],
         selectFood: [],
-        cartPosition: {}
+        cartPosition: {},
+        visibleDetail: false,
+        goodsDetail: {}
       }
     },
-    components: {GoodsAside, GoodsList, GoodsCart},
+    components: {GoodsAside, GoodsList, GoodsCart, GoodsDetail},
     mounted () {
       this.$api.element.fetchGoods({}, res => {
         this.goodsData = res.goods
@@ -85,7 +97,7 @@
       updateSelectFood (data, index) {
         // 正常情况下，列表中的每一个项都要有一个唯一标识的id来进行匹配
         this.$set(this.goodsData[data.firstLevelIndex].foods, data.secondLevelIndex, data)
-        this.$set(this.$refs.goodsList.goodsDetail, 'count', data.count)
+        this.$set(this.goodsDetail, 'count', data.count)
         if (data.count <= 0) {
           const temp = this.selectFood.findIndex(item => item.name === data.name)
           this.selectFood.splice(temp, 1)
@@ -97,6 +109,16 @@
         this.selectFood = []
         this.goodsData = JSON.parse(JSON.stringify(this.originData))
         this.$refs.goodsList.goodsDetail.count = 0
+      },
+      updateDetail (item, flag, listVm) {
+        this.goodsDetail = item
+        this.visibleDetail = flag
+        this.firstLevelIndex = listVm.firstLevelIndex
+        this.secondLevelIndex = listVm.secondLevelIndex
+      },
+      updateDetailFood (data) {
+        this.goodsDetail = data
+        this.updateFood(data, this.secondLevelIndex, this.firstLevelIndex)
       }
     }
   }
@@ -112,5 +134,12 @@
       display: flex;
       flex: 1;
     }
+    .slide-enter,
+    .slide-leave-to {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    .slide-enter-active,
+    .slide-leave-active {transition: all 1s;}
   }
 </style>

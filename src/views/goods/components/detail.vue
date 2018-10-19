@@ -122,12 +122,13 @@
   @import "~styles/mixins";
 
   .goods-detail {
-    /*overflow: scroll;*/
-    position: absolute;
+    overflow: scroll;
+    position: fixed;
     left: 0;
     right: 0;
     top: 0;
     bottom: .96rem;
+    background-color: #fff;
     .goods-detail-wrapper {
       background-color: #fff;
     }
