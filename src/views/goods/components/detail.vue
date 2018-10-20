@@ -37,11 +37,17 @@
         <p>{{goodsDetail.info}}</p>
       </div>
       <div class="split"></div>
-      <goods-comments :tagConfig="tagConfig">
+      <goods-comments
+        @change-type="selectType=$event.text"
+        :onlyContent.sync="onlyContent"
+        :tagConfig="tagConfig">
       </goods-comments>
       <div class="ratings-wrapper">
         <ul class="ratings">
-          <li v-for="(rating,i) in goodsDetail.ratings" :key="i">
+          <!--只显示内容-->
+          <li v-for="(rating,i) in ratingsList"
+              v-show="!onlyContent || rating.text !== ''"
+              :key="i">
             <p class="desc">
               <span class="date">{{rating.rateTime | formatTime}}</span>
               <span class="user">
@@ -50,7 +56,9 @@
             </span>
             </p>
             <p class="text">
-              <base-icon class="thumb-up" icon="thumb-up"></base-icon>
+              <base-icon :class="rating.rateType===1 ? 'thumb-down':'thumb-up'"
+                         :icon="rating.rateType===1 ? 'thumb-down':'thumb-up'">
+              </base-icon>
               {{rating.text}}
             </p>
           </li>
@@ -83,24 +91,51 @@
     data () {
       return {
         tagConfig: [
-          {text: '全部', number: 1},
-          {text: '推荐', number: 2},
-          {text: '吐槽', number: 3}
-        ]
+          {text: '全部', count: 0},
+          {text: '推荐', count: 0},
+          {text: '吐槽', count: 0}
+        ],
+        selectType: '全部',
+        onlyContent: false
       }
     },
     computed: {
       visibleJoinButton () {
         return !(this.goodsDetail.count > 0)
+      },
+      ratingsList () {
+        const {ratings} = this.goodsDetail
+        const {selectType} = this
+        let list = ratings
+        if (selectType === '推荐') {
+          list = this.positive
+        } else if (selectType === '吐槽') {
+          list = this.negative
+        }
+        return list
+      },
+      negative () {
+        const {ratings} = this.goodsDetail
+        return ratings.filter(rate => rate.rateType === 1)
+      },
+      positive () {
+        const {ratings} = this.goodsDetail
+        return ratings.filter(rate => rate.rateType === 0)
       }
     },
     mounted () {
       this.initScroll()
+      this.initTabConfig()
     },
     filters: {
       formatTime
     },
     methods: {
+      initTabConfig () {
+        this.tagConfig[0].count = this.goodsDetail.ratings.length
+        this.tagConfig[1].count = this.positive.length
+        this.tagConfig[2].count = this.negative.length
+      },
       closeDetail () {
         this.$emit('update:visibleDetail', false)
         toggleForbidScrollThrough(false)
@@ -112,7 +147,7 @@
       },
       handleJoinClick () {
         this.$refs.cartControl.plus()
-      }
+      },
     }
   }
 </script>

@@ -9,7 +9,4 @@ element.fetchGoods = ajaxFunc('/goods')
 
 // 评论信息
 element.fetchRatings = ajaxFunc('/ratings')
-
-element.fetchDemo = ajaxFunc('/seller')
-
 export default element

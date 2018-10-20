@@ -136,6 +136,7 @@ p {
 
 总之，`overflow:hidden`只能限制住相对于它自己的元素的显示和隐藏
 
+### 3. `background-color`初始值为`transparent`
 
 ## `Vue`知识
 ### 1. 访问子组件实例或子元素

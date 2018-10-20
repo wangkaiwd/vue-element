@@ -60,13 +60,16 @@
     },
     components: {GoodsAside, GoodsList, GoodsCart, GoodsDetail},
     mounted () {
-      this.$api.element.fetchGoods({}, res => {
-        this.goodsData = res.goods
-        this.originData = JSON.parse(JSON.stringify(res.goods))
-      })
+      this.getFoodData()
       this.getPosition()
     },
     methods: {
+      getFoodData () {
+        this.$api.element.fetchGoods({}, res => {
+          this.goodsData = res.goods
+          this.originData = JSON.parse(JSON.stringify(res.goods))
+        })
+      },
       getPosition () {
         setTimeout(() => {
           const rect = document.querySelector('#shop-cart-wrapper').getBoundingClientRect()

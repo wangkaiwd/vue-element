@@ -3,20 +3,20 @@
     <div class="tag-container">
       <h3>商品评论</h3>
       <ul class="tag">
-        <li :class="['tag-item',tagClass[i]]"
-            @click="activeIndex=i"
+        <li :class="['tag-item',tagClass[i],{active: i===activeIndex}]"
+            @click="changeType(tag,i)"
             v-for="(tag,i) in tagConfig"
             :key="tag.text">
           <span class="tag-text">{{tag.text}}</span>
-          <span class="tag-number">{{tag.number}}</span>
+          <span class="tag-number">{{tag.count}}</span>
         </li>
       </ul>
     </div>
     <div class="only-content-wrapper">
       <div class="only-content">
-        <base-icon @click="onlyContent"
+        <base-icon @click="$emit('update:onlyContent', !onlyContent)"
                    class="icon-checkmark"
-                   :class="{active}"
+                   :class="{active:onlyContent}"
                    icon="checkmark">
         </base-icon>
         只看有内容的评价
@@ -33,20 +33,23 @@
         type: Array,
         required: true
       },
+      onlyContent: {
+        type: Boolean,
+        default: false
+      }
     },
     data () {
       return {
         tagClass: ['all', 'recommend', 'tease'],
-        active: false,
         activeIndex: 0
       }
     },
     computed: {},
     methods: {
-      onlyContent () {
-        console.log('click')
-        this.active = !this.active
-      }
+      changeType (tag, i) {
+        this.activeIndex = i
+        this.$emit('change-type', tag)
+      },
     }
   }
 </script>
@@ -64,9 +67,19 @@
       border-radius: 0.04rem;
       color: #4d555d;
       &:not(:last-child) {margin-right: .16rem;}
-      &.all {background-color: #00a0dc;color: #fff;}
-      &.recommend {background-color: rgba(0, 160, 220, .2);}
-      &.tease {background-color: rgba(77, 85, 93, .2);}
+      &.all {
+        background-color: rgba(0, 160, 220, .2);
+        &.active {background-color: #00a0dc;color: #fff;}
+      }
+      /*&.all {background-color: #00a0dc;color: #fff;}*/
+      &.recommend {
+        background-color: rgba(0, 160, 220, .2);
+        &.active {background-color: #00a0dc;color: #fff;}
+      }
+      &.tease {
+        background-color: rgba(77, 85, 93, .2);
+        &.active {background-color: #4d555d;color: #fff;}
+      }
     }
     .only-content {
       display: flex;
