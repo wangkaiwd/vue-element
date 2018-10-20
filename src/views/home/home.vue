@@ -29,7 +29,7 @@
     },
     methods: {
       getSellerData () {
-        this.$api.element.fetchSeller({}, res => {
+        this.$api.Element.fetchSeller({}, res => {
           this.sellerData = res.seller
         })
       }

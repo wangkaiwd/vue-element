@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs border-1px">
+  <div class="tabs">
     <ul class="tabs-list">
       <router-link tag="li"
                    active-class="router-active"
@@ -35,6 +35,7 @@
   .tabs {
     height: .8rem;
     background-color: #fff;
+    border-bottom: 1px solid @border-color;
     .border-1px(@border-color);
     .tabs-list {
       height: 100%;

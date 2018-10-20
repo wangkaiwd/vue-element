@@ -65,7 +65,7 @@
     },
     methods: {
       getFoodData () {
-        this.$api.element.fetchGoods({}, res => {
+        this.$api.Element.fetchGoods({}, res => {
           this.goodsData = res.goods
           this.originData = JSON.parse(JSON.stringify(res.goods))
         })

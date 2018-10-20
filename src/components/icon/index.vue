@@ -20,7 +20,7 @@
 
 <style lang="less" scoped>
   .base-icon {
-    display: inline-block;
+    display: inline-flex;
     vertical-align: top;
     .icon {
       width: 1em;

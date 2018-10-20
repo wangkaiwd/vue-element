@@ -13,7 +13,6 @@
   export default {
     name: 'Demo',
     mounted () {
-      this.$api.element.fetchDemo({}, res => console.log(res))
     }
   }
 </script>

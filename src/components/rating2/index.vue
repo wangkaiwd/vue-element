@@ -34,11 +34,11 @@
         const hasDecimal = (onStar < this.score)
         for (let i = 0; i < LENGTH; i++) {
           if (i < onStar) {
-            result.push('on')
+            result.push(CLS_ON)
           } else if ((i = onStar) && hasDecimal) {
-            result.push('half')
+            result.push(CLS_HALF)
           } else {
-            result.push('off')
+            result.push(CLS_OFF)
           }
         }
         return result
@@ -50,7 +50,10 @@
 <style lang="less" scoped>
   .rating2 {
     display: inline-flex;font-size: 0;
-    span {display: inline-block;
+    vertical-align: top;
+    span {
+      display: inline-block;
+      /*vertical-align: top;*/
       &:last-child {margin-right: 0;}
     }
   }

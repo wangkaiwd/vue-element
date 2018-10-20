@@ -1,19 +1,19 @@
 <template>
-  <div class="goods-comments">
-    <div class="tag-container">
-      <h3>商品评论</h3>
-      <ul class="tag">
-        <li :class="['tag-item',tagClass[i],{active: i===activeIndex}]"
-            @click="changeType(tag,i)"
-            v-for="(tag,i) in tagConfig"
-            :key="tag.text">
-          <span class="tag-text">{{tag.text}}</span>
-          <span class="tag-number">
+    <div class="goods-comments">
+      <div class="tag-container">
+        <h3>商品评论</h3>
+        <ul class="tag">
+          <li :class="['tag-item',tagClass[i],{active: i===activeIndex}]"
+              @click="changeType(tag,i)"
+              v-for="(tag,i) in tagConfig"
+              :key="tag.text">
+            <span class="tag-text">{{tag.text}}</span>
+            <span class="tag-number">
             {{tag.count}}
           </span>
-        </li>
-      </ul>
-    </div>
+          </li>
+        </ul>
+      </div>
     <div class="only-content-wrapper">
       <div class="only-content">
         <base-icon @click="$emit('update:onlyContent', !onlyContent)"
