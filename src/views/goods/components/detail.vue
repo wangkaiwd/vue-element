@@ -38,14 +38,15 @@
       </div>
       <div class="split"></div>
       <goods-comments
-        @change-type="selectType=$event.text"
+        @changeType="ratings=$event"
+        :ratings="goodsDetail.ratings"
         :onlyContent.sync="onlyContent"
-        :tagConfig="tagConfig">
+        :desc="desc">
       </goods-comments>
       <div class="ratings-wrapper">
         <ul class="ratings">
           <!--只显示内容-->
-          <li v-for="(rating,i) in ratingsList"
+          <li v-for="(rating,i) in ratings"
               v-show="!onlyContent || rating.text !== ''"
               :key="i">
             <p class="desc">
@@ -56,8 +57,8 @@
             </span>
             </p>
             <p class="text">
-              <base-icon :class="rating.rateType===1 ? 'thumb-down':'thumb-up'"
-                         :icon="rating.rateType===1 ? 'thumb-down':'thumb-up'">
+              <base-icon :class="rating.rateType===NEGATIVE ? 'thumb-down':'thumb-up'"
+                         :icon="rating.rateType===NEGATIVE ? 'thumb-down':'thumb-up'">
               </base-icon>
               {{rating.text}}
             </p>
@@ -71,7 +72,6 @@
 <script>
   import CartControl from '@/components/cartControl'
   import GoodsComments from '@/components/comments'
-  import { toggleForbidScrollThrough } from '@/utils/compatible'
   import { formatTime } from '@/utils/handleTime'
   import BScroll from 'better-scroll'
 
@@ -90,55 +90,32 @@
     },
     data () {
       return {
-        tagConfig: [
-          {text: '全部', count: 0},
-          {text: '推荐', count: 0},
-          {text: '吐槽', count: 0}
-        ],
-        selectType: '全部',
-        onlyContent: false
+        desc: {
+          all: '全部',
+          positive: '推荐',
+          negative: '吐槽'
+        },
+        ratings: this.goodsDetail.ratings,
+        onlyContent: false,
+        ALL: 2,
+        POSITIVE: 0,
+        NEGATIVE: 1
       }
     },
     computed: {
       visibleJoinButton () {
         return !(this.goodsDetail.count > 0)
       },
-      ratingsList () {
-        const {ratings} = this.goodsDetail
-        const {selectType} = this
-        let list = ratings
-        if (selectType === '推荐') {
-          list = this.positive
-        } else if (selectType === '吐槽') {
-          list = this.negative
-        }
-        return list
-      },
-      negative () {
-        const {ratings} = this.goodsDetail
-        return ratings.filter(rate => rate.rateType === 1)
-      },
-      positive () {
-        const {ratings} = this.goodsDetail
-        return ratings.filter(rate => rate.rateType === 0)
-      }
     },
     mounted () {
       this.initScroll()
-      this.initTabConfig()
     },
     filters: {
       formatTime
     },
     methods: {
-      initTabConfig () {
-        this.tagConfig[0].count = this.goodsDetail.ratings.length
-        this.tagConfig[1].count = this.positive.length
-        this.tagConfig[2].count = this.negative.length
-      },
       closeDetail () {
         this.$emit('update:visibleDetail', false)
-        toggleForbidScrollThrough(false)
       },
       initScroll () {
         this.scroll = new BScroll('.goods-detail', {
@@ -157,7 +134,7 @@
   @import "~styles/mixins";
 
   .goods-detail {
-    overflow: scroll;
+    /*overflow: scroll;*/
     position: fixed;
     left: 0;
     right: 0;

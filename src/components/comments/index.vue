@@ -8,7 +8,9 @@
             v-for="(tag,i) in tagConfig"
             :key="tag.text">
           <span class="tag-text">{{tag.text}}</span>
-          <span class="tag-number">{{tag.count}}</span>
+          <span class="tag-number">
+            {{tag.count}}
+          </span>
         </li>
       </ul>
     </div>
@@ -26,29 +28,53 @@
 </template>
 
 <script>
+  const ALL = 2
+  const POSITIVE = 0
+  const NEGATIVE = 1
   export default {
     name: 'GoodsComments',
     props: {
-      tagConfig: {
-        type: Array,
+      desc: { // 文字描述
+        type: Object,
         required: true
       },
-      onlyContent: {
+      onlyContent: { // 是否只看有内容的评价
         type: Boolean,
         default: false
+      },
+      ratings: { // 评价列表
+        type: Array,
+        required: true
       }
     },
     data () {
       return {
         tagClass: ['all', 'recommend', 'tease'],
-        activeIndex: 0
+        activeIndex: 0,
       }
     },
-    computed: {},
+    computed: {
+      tagConfig () {
+        const {desc, ratings, negative, positive} = this
+        return [
+          {text: desc.all, count: ratings.length, type: 'all'},
+          {text: desc.positive, count: positive.length, type: 'positive'},
+          {text: desc.negative, count: negative.length, type: 'negative'}
+        ]
+      },
+      negative () {
+        return this.ratings.filter(rate => rate.rateType === NEGATIVE)
+      },
+      positive () {
+        return this.ratings.filter(rate => rate.rateType === POSITIVE)
+      }
+    },
     methods: {
       changeType (tag, i) {
         this.activeIndex = i
-        this.$emit('change-type', tag)
+        // 这里要进行一次深拷贝才能将内容传递给父组件，否则的话会通过引用修改子组件中computed中的数据
+        const data = (this[tag.type] ? JSON.parse(JSON.stringify(this[tag.type])) : this.ratings)
+        this.$emit('changeType', data)
       },
     }
   }

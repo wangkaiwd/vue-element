@@ -17,7 +17,7 @@
       </goods-list>
     </div>
     <transition name="slide">
-      <goods-detail v-if="visibleDetail"
+      <goods-detail v-if="visibleDetail && Object.keys(goodsDetail).length > 0"
                     :visibleDetail.sync="visibleDetail"
                     :goodsDetail="goodsDetail"
                     :position="cartPosition"
