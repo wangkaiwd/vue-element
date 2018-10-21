@@ -137,6 +137,16 @@ p {
 总之，`overflow:hidden`只能限制住相对于它自己的元素的显示和隐藏
 
 ### 3. `background-color`初始值为`transparent`
+在使用`better-scroll`的时候，由于内容会在到底或到顶的时候有一个弹性的动画
+效果，导致漏出了页面中被当前元素遮盖的页面，极大的影响了页面美观程度。  
+![background-color](./screenshot/background.png)
+
+> [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-color):`CSS`属性
+> `background-color`会设置元素的背景色，属性的值为颜色值或关键字
+> `transparent`二者选其一，初始值默认为`transparent`(透明的)
+
+这是由于没有为`better-scroll`的滚动部分的容器`div`设置背景色的原因。
+当我们设置容器`div`和内容区域的背景颜色一样的时候，页面样式就会按照预期显示
 
 ## `Vue`知识
 ### 1. 访问子组件实例或子元素
@@ -291,3 +301,29 @@ updateSelectFood (data, index) {
 ```
 
 ### 3. 通过`filters`和`compouted`来进行模板简化
+有些时候，代码的`html template`展示层会由于代码逻辑而导致显示内容特别臃肿，
+这个时候由于变量是通过遍历数据获得的并不能通过`computed`来进行逻辑的处理。
+```html
+<p class="text">
+  <base-icon :class="rating.rateType===NEGATIVE ? 'thumb-down':'thumb-up'"
+             :icon="rating.rateType===NEGATIVE ? 'thumb-down':'thumb-up'">
+  </base-icon>
+  {{rating.text}}
+</p>
+```
+这里我们通过`filters`过滤器来进行代码优化,相关的逻辑都可以在函数中进行，而不会
+造成`html`中的表达式过于冗长
+```html
+<base-icon :class="rating.rateType|iconClass"
+           :icon="rating.rateType|iconClass">
+</base-icon>
+```
+```js
+ filters: {
+  iconClass (val) {
+    let str
+    val === 0 ? str = 'thumb-up' : str = 'thumb-down'
+    return str
+  },
+}
+```
