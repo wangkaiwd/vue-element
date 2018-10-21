@@ -35,7 +35,7 @@
         for (let i = 0; i < LENGTH; i++) {
           if (i < onStar) {
             result.push(CLS_ON)
-          } else if ((i = onStar) && hasDecimal) {
+          } else if ((i === onStar) && hasDecimal) {
             result.push(CLS_HALF)
           } else {
             result.push(CLS_OFF)

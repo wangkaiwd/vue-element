@@ -34,10 +34,10 @@
                     :ratings="originRatings"
                     @changeType="ratings=$event">
     </goods-comments>
-    <div class="comments-list-wrapper">
+    <div class="comments-list-wrapper" v-if="ratings.length">
       <div class="comments-list-item"
            :key="index"
-           v-if="ratings.length"
+           v-if="!onlyContent || rating.text!=='' "
            v-for="(rating,index) in ratings">
         <div class="avatar">
           <img :src="rating.avatar" alt="">
@@ -45,7 +45,7 @@
         <div class="content">
           <div class="content-name">
             <span>{{rating.username}}</span>
-            <span>{{rating.rateTime | formatTime}}</span>
+            <span>{{rating.rateTime|formatTime}}</span>
           </div>
           <div class="content-score">
             <goods-rating
@@ -57,8 +57,8 @@
             {{rating.text}}
           </div>
           <div class="content-tag" v-if="rating.recommend.length">
-            <base-icon :class="rating.rateType | iconClass"
-                       :icon="rating.rateType | iconClass">
+            <base-icon :class="rating.rateType|iconClass"
+                       :icon="rating.rateType|iconClass">
             </base-icon>
             <ul class="tag-item">
               <li v-for="(item,i) in rating.recommend"
@@ -108,12 +108,11 @@
         let str
         val === 0 ? str = 'thumb-up' : str = 'thumb-down'
         return str
-      }
+      },
     },
     mounted () {
       this.$api.Element.fetchRatings({}, res => {
-        this.ratings = res.ratings.slice(0, 2)
-        console.log(this.ratings)
+        this.ratings = res.ratings
         this.originRatings = JSON.parse(JSON.stringify(this.ratings))
       })
     }
