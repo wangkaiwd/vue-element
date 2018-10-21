@@ -279,10 +279,10 @@ vm.$set(object,key,value)
 * 由孙子组件将值传回，并将对应的索引传回，根据索引来修改原数组
 * 由孙子组件将值传回，在原有对象上先添加一个属性，并赋值
 ```js
-updateFood (data, index1, index2) {
+updateFood (data, secondLevelIndex, firstLevelIndex) {
   // this.goodsData[index2].foods[index1].count = data.count
   // 对象添加一个新的属性
-  this.$set(this.goodsData[index2].foods[index1], 'count', data.count)
+  this.$set(this.goodsData[firstLevelIndex].foods[secondLevelIndex], 'count', data.count)
   //这里要用三等号，因为item.name === data.name这是条件语句，而不是赋值语句
   const temp = this.selectFood.findIndex(item => item.name === data.name)
   if (temp > -1) {
