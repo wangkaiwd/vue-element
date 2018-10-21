@@ -47,8 +47,15 @@
     <div class="split"></div>
     <div class="scene">
       <h3 class="title">商家实景</h3>
-      <div class="gallery">
-
+      <div class="gallery" ref="gallery">
+        <ul class="gallery-content" ref="galleryContent">
+          <li v-for="(item,i) in seller.pics"
+              :key="i"
+              ref="galleryItem"
+              class="gallery-item">
+            <img :src="item" alt="">
+          </li>
+        </ul>
       </div>
     </div>
     <div class="split"></div>
@@ -60,6 +67,7 @@
 </template>
 
 <script>
+  import BScroll from 'better-scroll'
   import GoodsRating from '@/components/rating2'
   import SellerList from './components/list'
 
@@ -90,8 +98,22 @@
       }
     },
     mounted () {
+      this.$nextTick(() => {
+        this.initPics()
+      })
     },
-    methods: {}
+    methods: {
+      initPics () {
+        const {galleryItem, galleryContent, gallery} = this.$refs
+        let picWidth = (galleryItem && galleryItem[0].offsetWidth) || 0
+        galleryContent.style.width = picWidth * galleryItem.length + 'px'
+        this.$nextTick(() => {
+          this.scroll = new BScroll(gallery, {
+            scrollX: true,
+          })
+        })
+      }
+    }
   }
 </script>
 
@@ -169,6 +191,13 @@
     }
     .scene {
       padding: .36rem;
+      .gallery {overflow: hidden;}
+      .gallery-content {
+        display: flex;
+        li:not(:first-child) {margin-left: .12rem;}
+        li {flex-shrink: 0;width: 2.4rem;height: 2.4rem;}
+        img {width: 2.4rem;}
+      }
     }
     .info {
       padding: .36rem;

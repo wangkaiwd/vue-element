@@ -4,7 +4,8 @@
     <el-tabs></el-tabs>
     <div class="tab-content">
       <!--可以通过router-view将想要的数据传递到子组件-->
-      <router-view :seller="sellerData"></router-view>
+      <!--在确保sellerData不为空对象的时候加载路由组件-->
+      <router-view v-if="Object.keys(sellerData).length" :seller="sellerData"></router-view>
     </div>
   </div>
 </template>
