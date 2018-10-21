@@ -30,12 +30,15 @@
     </div>
     <div class="split"></div>
     <goods-comments :desc="desc"
-                    :ratings="ratings">
+                    :onlyContent.sync="onlyContent"
+                    :ratings="originRatings"
+                    @changeType="ratings=$event">
     </goods-comments>
     <div class="comments-list-wrapper">
       <div class="comments-list-item"
-           v-for="(rating,index) in ratings"
-           :key="index">
+           :key="index"
+           v-if="ratings.length"
+           v-for="(rating,index) in ratings">
         <div class="avatar">
           <img :src="rating.avatar" alt="">
         </div>
@@ -53,8 +56,10 @@
           <div class="content-text">
             {{rating.text}}
           </div>
-          <div class="content-tag" v-if="rating.recommend.length!==0">
-            <base-icon class="thumb-up" icon="thumb-up"></base-icon>
+          <div class="content-tag" v-if="rating.recommend.length">
+            <base-icon :class="rating.rateType | iconClass"
+                       :icon="rating.rateType | iconClass">
+            </base-icon>
             <ul class="tag-item">
               <li v-for="(item,i) in rating.recommend"
                   :key="i">
@@ -63,6 +68,9 @@
             </ul>
           </div>
         </div>
+      </div>
+      <div class="comments-empty" v-if="!ratings.length">
+        暂无评价
       </div>
     </div>
   </div>
@@ -88,16 +96,25 @@
           'positive': '满意',
           'negative': '吐槽'
         },
-        ratings: []
+        originRatings: [],
+        ratings: [],
+        onlyContent: false,
       }
     },
     components: {GoodsRating, GoodsComments},
     filters: {
-      formatTime
+      formatTime,
+      iconClass (val) {
+        let str
+        val === 0 ? str = 'thumb-up' : str = 'thumb-down'
+        return str
+      }
     },
     mounted () {
       this.$api.Element.fetchRatings({}, res => {
-        this.ratings = res.ratings
+        this.ratings = res.ratings.slice(0, 2)
+        console.log(this.ratings)
+        this.originRatings = JSON.parse(JSON.stringify(this.ratings))
       })
     }
   }
@@ -158,6 +175,12 @@
     }
     .comments-list-wrapper {
       padding: 0 .36rem;
+      .comments-empty {
+        text-align: center;
+        padding: .36rem 0;
+        color: #93999f;
+        font-size: 12px;
+      }
       .comments-list-item {
         display: flex;
         padding: .36rem 0;

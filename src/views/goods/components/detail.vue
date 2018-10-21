@@ -44,7 +44,7 @@
         :desc="desc">
       </goods-comments>
       <div class="ratings-wrapper">
-        <ul class="ratings">
+        <ul class="ratings" v-if="ratings.length">
           <!--只显示内容-->
           <li v-for="(rating,i) in ratings"
               v-show="!onlyContent || rating.text !== ''"
@@ -64,6 +64,9 @@
             </p>
           </li>
         </ul>
+        <div class="comments-empty" v-if="!ratings.length">
+          暂无评价
+        </div>
       </div>
     </div>
   </div>
@@ -232,6 +235,12 @@
     }
     .ratings-wrapper {
       padding: 0 .36rem;
+      .comments-empty {
+        text-align: center;
+        padding: .36rem 0;
+        color: #93999f;
+        font-size: 12px;
+      }
       li {
         padding: .32rem 0;
         border-bottom: 1px solid @border-color;

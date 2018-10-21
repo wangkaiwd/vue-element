@@ -237,7 +237,7 @@ watch: {
 </div>
 ```
 
-### [`Vue`响应式](https://cn.vuejs.org/v2/guide/list.html#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9)
+### 2. [`Vue`响应式](https://cn.vuejs.org/v2/guide/list.html#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9)
 > 响应式：视图层（页面中）
 
 由于`JavaScript`的限制，`Vue`不能检测以下变动的数组：  
@@ -289,3 +289,5 @@ updateSelectFood (data, index) {
   this.$set(this.selectFood, index, data)
 }
 ```
+
+### 3. 通过`filters`和`compouted`来进行模板简化
