@@ -1,5 +1,5 @@
 <template>
-  <div class="seller">
+  <div class="seller" ref="seller">
     <div class="seller-top">
       <div class="collect">
         <div class="name">{{seller.name}}</div>
@@ -98,6 +98,9 @@
       }
     },
     mounted () {
+      window.addEventListener('scroll', () => {
+        console.log(this.$refs.seller.getBoundingClientRect().y)
+      })
       this.$nextTick(() => {
         this.initPics()
       })

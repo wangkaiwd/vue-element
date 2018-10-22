@@ -23,6 +23,7 @@
 <style lang="less" scoped>
   .index {
     -webkit-overflow-scrolling: touch;
+    background-color: #fff;
   }
 
   [v-cloak] {display: none;}

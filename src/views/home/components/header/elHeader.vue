@@ -128,8 +128,10 @@
       margin-left: 0.32rem;
     }
     .title {
+      display: flex;
       margin-top: 0.04rem;
       font-size: 16px;
+      line-height: .36rem;
       img {
         width: 0.6rem;
         height: 0.36rem;
@@ -142,6 +144,7 @@
     }
     .full-cut {
       display: flex;
+      align-items: center;
       font-size: 12px;
       margin-top: 0.2rem;
       > span {

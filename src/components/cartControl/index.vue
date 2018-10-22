@@ -110,14 +110,14 @@
       right: 0;
       height: 100%;
       width: 100%;
-      transition: all .2s linear;
+      transition: all .3s linear;
     }
     .ball {
       height: 100%;
       width: 100%;
       border-radius: 50%;
       background-color: #00a0dc;
-      transition: all .2s cubic-bezier(.2, -0.17, .41, -0.16);
+      transition: all .3s cubic-bezier(.2, -0.17, .41, -0.16);
     }
     .number {
       width: .48rem;

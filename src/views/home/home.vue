@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <el-header :sellerData="sellerData"></el-header>
+    <el-header class="el-header" :sellerData="sellerData"></el-header>
     <el-tabs></el-tabs>
     <div class="tab-content">
       <!--可以通过router-view将想要的数据传递到子组件-->
@@ -43,6 +43,6 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    .tab-content {flex: 1;overflow: scroll;}
+    .tab-content {flex: 1;overflow: scroll;position: relative;}
   }
 </style>
